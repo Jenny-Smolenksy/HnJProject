@@ -57,11 +57,11 @@ string Lexer::seperateLine(string line) {
     for (int i = 0; i < line.size(); i++) {
         if (line[i] == '=') {
             buff += DIV;
-        }
-        else if (line[i] != space) {
+        } else if (line[i] != space) {
             buff += line[i];
-        } else if (line[i] == space && find(operators.begin(), operators.end(), line[i + 1]) != operators.end()) {
-            //space before operator - skip it
+        } else if (line[i] == space && (find(operators.begin(), operators.end(), line[i + 1]) != operators.end() ||
+                                        find(operators.begin(), operators.end(), line[i - 1]) != operators.end())) {
+            //space before  or after operator - skip it
             continue;
         } else if (line[i] == space && !buff.empty()) {
             buff += DIV;
