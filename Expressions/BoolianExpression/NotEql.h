@@ -8,10 +8,14 @@
 
 #include "BoolianExpression.h"
 
+/**
+ * Not eqal
+ */
 class NotEql : public BoolianExpression {
 public:
     double calculate() override;
-   NotEql(string r, string l);
+
+    NotEql(string r, string l);
 
 };
 

@@ -8,6 +8,9 @@
 
 #include "../Expression.h"
 
+/**
+ * simple bollianExpression class to deal with boolian Expressions
+ */
 class BoolianExpression : public Expression {
 protected:
     Expression *right = nullptr;

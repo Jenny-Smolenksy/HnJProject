@@ -8,6 +8,9 @@
 
 #include "Command.h"
 
+/**
+ * open server comand
+ */
 class OpenServerComman : public Command {
 public:
     int execute(deque<string> act) override;

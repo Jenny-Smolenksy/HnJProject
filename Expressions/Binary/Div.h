@@ -8,9 +8,13 @@
 
 #include "BinaryExpression.h"
 
-class Div : public BinaryExpression{
+/**
+ * simple Div class to calculate Div Expressions
+ */
+class Div : public BinaryExpression {
 public:
     double calculate() override;
+
     Div(Expression *r, Expression *l);
 
 };

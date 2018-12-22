@@ -8,7 +8,10 @@
 
 #include "ConditionParser.h"
 
-class LoopComand : public ConditionParser{
+/**
+ * while command
+ */
+class LoopComand : public ConditionParser {
 public:
     int execute(deque<string> act) override;
 

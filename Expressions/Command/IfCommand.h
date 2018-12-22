@@ -8,6 +8,9 @@
 
 #include "ConditionParser.h"
 
+/**
+ * If command
+ */
 class IfCommand : public ConditionParser{
 
 public:

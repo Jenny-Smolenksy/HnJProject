@@ -11,28 +11,35 @@
 #include "../BoolianExpression/NotEql.h"
 #include "../BoolianExpression/NaryGreater.h"
 #include "../BoolianExpression/NaryLesser.h"
+#include "../../Utiies.h"
 
 
 int ConditionParser::execute(deque<string> act) {
     return 0;
 }
 
+/**
+ * set condition from a string
+ * @param condition
+ */
 void ConditionParser::setCondition(string condition) {
-    setOperator();
     string r;
     string l;
     string op;
     bool next = false;
-    for (int i = 0; i < condition.length(); i++) {
-        if (exist(condition[i])) {
+    for (char i : condition) {
+        if (Utiies::isBoolianOperator(i)) {
+            //build operator/move on to next string
             next = true;
-            op += condition[i];
+            op += i;
             continue;
         }
         if (!next) {
-            r += condition[i];
+            //build first string
+            r += i;
         } else {
-            l += condition[i];
+            //build second
+            l += i;
         }
     }
     finalSet(r, l, op);
@@ -40,18 +47,12 @@ void ConditionParser::setCondition(string condition) {
 
 }
 
-void ConditionParser::setOperator() {
-    operators.push_back('<');
-    operators.push_back('>');
-    operators.push_back('=');
-    operators.push_back('!');
-
-}
-
-bool ConditionParser::exist(char op) {
-    return find(operators.begin(), operators.end(), op) != operators.end();
-}
-
+/**
+* set condition according to the operator
+* @param r  right string
+* @param l   left string
+* @param op ther operator
+ */
 void ConditionParser::finalSet(string r, string l, string op) {
     if (op == "==") {
         this->condition = new Equals(r, l);
@@ -71,9 +72,16 @@ void ConditionParser::finalSet(string r, string l, string op) {
     if (op == "<=") {
         this->condition = new NaryLesser(r, l);
     }
+    if (this->condition == nullptr) {
+        throw "how to compare";
+    }
 
 }
 
+/**
+ * set commands
+ * @param comandsToseperate
+ */
 void ConditionParser::setCommands(deque<string> comandsToseperate) {
     while (!comandsToseperate.empty()) {
         deque<string> command;
@@ -92,6 +100,11 @@ void ConditionParser::setCommands(deque<string> comandsToseperate) {
 
 }
 
+
+/**
+* set the condition and the commands in the while scope
+* @param act all the information
+ */
 void ConditionParser::setParser(deque<string> act) {
     string conditionHolder;
     while (act.front() != "{") {

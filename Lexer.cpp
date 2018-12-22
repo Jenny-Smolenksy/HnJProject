@@ -20,10 +20,6 @@ Lexer *Lexer::getInstance() {
     //singleton instance:
     if (instance == nullptr) {
         instance = new Lexer();
-        instance->operators.push_back('+');
-        instance->operators.push_back('-');
-        instance->operators.push_back('*');
-        instance->operators.push_back('/');
     }
 
     return instance;
@@ -78,7 +74,7 @@ string Lexer::separateLine(string line) {
             buff += DIV;
         } else if (line[i] != space) {
             buff += line[i];
-        } else if (line[i] == space && (exist(line[i + 1]) || exist(line[i - 1]))) {
+        } else if (line[i] == space && ((Utiies::isMathOperator(line[i-1])) || Utiies::isMathOperator(line[i+1]))) {
             //space before  or after operator - skip it
             continue;
         } else if (line[i] == space && !buff.empty()) {
@@ -90,14 +86,7 @@ string Lexer::separateLine(string line) {
     return buff;
 }
 
-/**
- * check if a char is a valid operator
- * @param op
- * @return
- */
-bool Lexer::exist(char op) {
-    return find(operators.begin(), operators.end(), op) != operators.end();
-}
+
 
 
 /**
@@ -127,6 +116,7 @@ deque<string> Lexer::getLines(string fileName) {
     }
     return result;
 }
+
 
 
 /**

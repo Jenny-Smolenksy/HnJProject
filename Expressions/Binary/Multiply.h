@@ -7,10 +7,13 @@
 
 
 #include "BinaryExpression.h"
-
-class Multiply: public BinaryExpression {
+/**
+ * simple Multiply class to calculate Muliply Expressions
+ */
+class Multiply : public BinaryExpression {
 public:
     double calculate() override;
+
     Multiply(Expression *r, Expression *l);
 
 };

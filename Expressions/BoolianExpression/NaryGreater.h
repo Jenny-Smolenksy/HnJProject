@@ -8,9 +8,13 @@
 
 #include "BoolianExpression.h"
 
+/**
+ * Greater or Equal
+ */
 class NaryGreater : public BoolianExpression {
 public:
     double calculate() override;
+
     NaryGreater(string r, string l);
 
 };

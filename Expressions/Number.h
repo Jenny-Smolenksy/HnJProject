@@ -8,11 +8,16 @@
 
 #include "Expression.h"
 
-class Number : public Expression{
+/**
+ * Number
+ */
+class Number : public Expression {
     double num;
 public:
     explicit Number(double val);
+
     double calculate() override;
+
     double calculate(deque<string> p);
 };
 

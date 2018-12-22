@@ -146,6 +146,7 @@ Expression *ShuntingYard::innerExp(deque<string> *exp) {
         if (result == nullptr) {
             throw "illegal math expression";
         }
+        expToDel.push_back(result);
         stack.push(result);
     }
     return stack.top();
@@ -203,5 +204,12 @@ string ShuntingYard::addB(string buff, char b) {
     buff += b;
     buff += DIV;
     return buff;
+}
+
+ShuntingYard::~ShuntingYard() {
+    for (Expression *e:expToDel) {
+        delete e;
+    }
+
 }
 

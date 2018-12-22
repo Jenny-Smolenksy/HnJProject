@@ -18,3 +18,11 @@ deque <string> Utiies::splitBy(string line, char c) {
     }
     return allparts;
 }
+
+bool Utiies::isBoolianOperator(char op) {
+    return (op=='='||op=='>'||op=='!'||op=='<');
+}
+
+bool Utiies::isMathOperator(char op) {
+    return (op=='+'||op=='-'||op=='*'||op=='/');
+}

@@ -12,9 +12,8 @@
 
 class ConditionParser : public Command {
 protected:
-    Expression* condition;
+    Expression *condition;
     vector<deque<string>> commands;
-    vector<char> operators;
 public:
     /**
     * set the condition and the commands in the while scope
@@ -22,17 +21,34 @@ public:
     */
     void setParser(deque<string> act);
 
+    /**
+     * execute
+     * @param act
+     * @return
+     */
     int execute(deque<string> act) override;
 
+    /**
+     * set condition
+     * @param condition
+     */
     void setCondition(string condition);
 
+    /**
+     * set condition according to the operator
+     * @param r  right string
+     * @param l   left string
+     * @param op ther operator
+     */
     void finalSet(string r, string l, string op);
 
-    void  setCommands(deque<string> comandsToseperate);
+    /**
+     * set commands
+     * @param comandsToseperate
+     */
+    void setCommands(deque<string> comandsToseperate);
 
-    void setOperator();
 
-    bool exist(char op);
 };
 
 

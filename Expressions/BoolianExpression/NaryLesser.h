@@ -8,13 +8,16 @@
 
 #include "BoolianExpression.h"
 
+/**
+ * Lesser or eqaul
+ */
 class NaryLesser : public BoolianExpression {
 public:
     double calculate() override;
+
     NaryLesser(string r, string l);
 
 };
-
 
 
 #endif //HNJPROJECT_NARYLESSER_H

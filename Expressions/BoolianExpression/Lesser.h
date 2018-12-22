@@ -8,9 +8,13 @@
 
 #include "BoolianExpression.h"
 
-class Lesser: public BoolianExpression {
+/**
+ * Lesser
+ */
+class Lesser : public BoolianExpression {
 public:
     double calculate() override;
+
     Lesser(string r, string l);
 
 };

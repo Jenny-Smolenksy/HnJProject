@@ -8,9 +8,13 @@
 
 #include "BoolianExpression.h"
 
-class Equals: public BoolianExpression {
+/**
+ * Equals
+ */
+class Equals : public BoolianExpression {
 public:
     double calculate() override;
+
     Equals(string r, string l);
 
 };
