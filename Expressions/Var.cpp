@@ -14,10 +14,11 @@ Var::Var(string val) {
 
 double Var::calculate() {
     SymbolsTable *s = SymbolsTable::getInstance();
-    if (s->exict(var)) {
+    if (s->exist(var)) {
         return s->getValue(var);
     } else {
-        throw "this variable is not in the system";
+        //TODO: bring back later and check this
+        //throw "this variable is not in the system";
     }
 }
 

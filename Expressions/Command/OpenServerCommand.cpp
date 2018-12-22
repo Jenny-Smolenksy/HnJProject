@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "OpenServerComman.h"
+#include "OpenServerCommand.h"
 #include "../../ShuntingYard.h"
 #include "../Expression.h"
 
