@@ -4,7 +4,7 @@
 
 #include "Parser.h"
 #include "Expressions/Command/DefineVarCommand.h"
-#include "Expressions/Command/OpenServerComman.h"
+#include "Expressions/Command/OpenServerCommand.h"
 #include "Expressions/Command/ConnectCommand.h"
 #include "Expressions/Command/PrintCommand.h"
 #include "Expressions/Command/SleepCommand.h"
@@ -33,6 +33,7 @@ void Parser::setMap() {
     stringToCommandMap["connect"] = new CommandExpression(new ConnectCommand());
     stringToCommandMap["print"] = new CommandExpression(new PrintCommand());
     stringToCommandMap["sleep"] = new CommandExpression(new SleepCommand());
+    //TODO check why duplicate sleep with Hilla
     stringToCommandMap["sleep"] = new CommandExpression(new SleepCommand());
     stringToCommandMap["while"] = new CommandExpression(new LoopComand());
 }
@@ -43,7 +44,7 @@ void Parser::runner(vector<deque<string>> commands) {
     for (deque<string> &command_line:commands) {
         c = stringToCommandMap[command_line[0]];
         if (c == nullptr) {
-            if (s->exict(command_line[0])) {
+            if (s->exist(command_line[0])) {
                 //update existing var
                 c = stringToCommandMap["var"];
                 c->calculate(command_line);

@@ -7,7 +7,7 @@
 using namespace std;
 
 int main(int arg, char *argv[]) {
-    std::cout << "BSD, Hello, Hilla!" << std::endl;
+    std::cout << "have a great week, Hilla!" << std::endl;
     Lexer *lex = Lexer::getInstance();
     vector<deque<string>> res = lex->lexFromFile(argv[1]);
     Parser *p = Parser::getInstance();
@@ -20,6 +20,8 @@ int main(int arg, char *argv[]) {
 
     //lets try build a lexer without loss of generality daaa
 
+    SymbolsTable* table = SymbolsTable::getInstance();
+    cout << table->getValue("alt") << endl;
 
     return 0;
 }

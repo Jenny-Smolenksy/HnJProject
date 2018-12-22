@@ -8,5 +8,6 @@
 
 int ConnectCommand::execute(deque<string> act) {
     cout << "need to connect" << endl;
+
     return 0;
 }

@@ -9,6 +9,8 @@
 #include <string>
 #include <map>
 
+#define VALUES_SIZE 23
+
 using namespace std;
 
 /**
@@ -19,28 +21,25 @@ class SymbolsTable {
 private:
     static SymbolsTable *instance;
 
-    SymbolsTable() = default;
+    SymbolsTable();
 
-    map<string, string> pathToSymbolMap;
-    map<string, double> symbolsMap;
+    map<string, string> symbolToPathMap;
+    map<string, int> pathToValueIndexMap;
+    double values[VALUES_SIZE] = {0};
+
 
 public:
     // Static access method
     static SymbolsTable *getInstance();
 
-    void setSymbol(string symbol, double value);
-
-    void setSymbol(string symbol,string path);
-
-    void updateLocalValueByPath(string path, double value);
-
+    void addSymbol(string symbol, string path);
+    bool exist(string symbol);
+    virtual ~SymbolsTable();
+    void updateValues(string data);
     double getValue(string symbol);
 
-    bool exict(string symbol);
-
-    virtual ~SymbolsTable();
-
-
+    //   void updateLocalValueByPath(string path, double value);
+    //  void setSymbol(string symbol, double value);
 };
 
 #endif //HNJPROJECT_SYMBOLTABLE_H
