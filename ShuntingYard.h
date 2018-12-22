@@ -27,9 +27,9 @@ public:
 
     Expression *stringToExpression(string parameters);
 
-    string arangeSpaces(string parameter);
+    string arrangeSpaces(string parameter);
 
-    bool exict(string c);
+    bool exist(string c);
 
     bool greaterPrecedence(string token,string other);
 
@@ -39,7 +39,7 @@ public:
 
     string charToString(char c);
 
-    string addOprator(string buff, char op);
+    string addOperator(string buff, char op);
 
     string addB(string buff, char b);
 };

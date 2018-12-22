@@ -38,23 +38,27 @@ void Parser::setMap() {
 }
 
 void Parser::runner(vector<deque<string>> commands) {
+    for (deque<string> &command_line:commands) {
+        runCommand(command_line);
+    }
+}
+
+void Parser::runCommand(deque<string> command) {
     CommandExpression *c = nullptr;
     SymbolsTable *s = SymbolsTable::getInstance();
-    for (deque<string> &command_line:commands) {
-        c = stringToCommandMap[command_line[0]];
-        if (c == nullptr) {
-            if (s->exict(command_line[0])) {
-                //update existing var
-                c = stringToCommandMap["var"];
-                c->calculate(command_line);
-            } else if (command_line[0] == "}") {
-                //TODO loop logic can also come end of last  line
-                continue;
-            }
-        } else {
-            command_line.pop_front();
-            c->calculate(command_line);
-
+    c = stringToCommandMap[command[0]];
+    if (c == nullptr) {
+        if (s->exict(command[0])) {
+            //update existing var
+            c = stringToCommandMap["var"];
+            c->calculate(command);
+        } else{
+            throw "unsepported command";
         }
+    } else {
+        command.pop_front();
+        c->calculate(command);
+
     }
+
 }

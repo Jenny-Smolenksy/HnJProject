@@ -23,6 +23,7 @@ void SymbolsTable::setSymbol(string symbol, double value) {
 }
 
 double SymbolsTable::getValue(string symbol) {
+
     return symbolsMap[symbol];
 }
 

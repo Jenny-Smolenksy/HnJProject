@@ -7,13 +7,13 @@
 using namespace std;
 
 int main(int arg, char *argv[]) {
-    std::cout << "BSD, Hello, Hilla!" << std::endl;
+   // std::cout << "BSD, Hello, Hilla!" << std::endl;
     Lexer *lex = Lexer::getInstance();
     vector<deque<string>> res = lex->lexFromFile(argv[1]);
     Parser *p = Parser::getInstance();
     p->runner(res);
     ShuntingYard *calculator = ShuntingYard::getInstance();
-    std::cout << "3+(4/2)*5" << endl;
+   // std::cout << "3+(4/2)*5" << endl;
     Expression *e = calculator->stringToExpression("3+(4/2)*5");
     double x = e->calculate();
     //  std::cout<< calculator->infixToPostfix("3+(4/2)*5")<<endl;

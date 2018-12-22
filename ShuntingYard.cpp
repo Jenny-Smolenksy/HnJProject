@@ -14,7 +14,7 @@
 #include "Expressions/Binary/Div.h"
 #include "Expressions/Unary/Neg.h"
 
-#define DIV "_"
+#define DIV ","
 #define RIGHT_B "("
 #define LEFT_B ")"
 
@@ -37,15 +37,15 @@ ShuntingYard *ShuntingYard::getInstance() {
 }
 
 deque<string> ShuntingYard::infixToPostfix(string parameters) {
-    parameters = arangeSpaces(parameters);
-    deque<string> splited = Utiies::splitBy(parameters, '_');
+    parameters = arrangeSpaces(parameters);
+    deque<string> splited = Utiies::splitBy(parameters, ',');
     deque<string> output;
     deque<string> stack;
     string tmp;
     for (const string &token:splited) {
-        if (!exict(token) && token != RIGHT_B && token != LEFT_B) {
+        if (!exist(token) && token != RIGHT_B && token != LEFT_B) {
             output.push_back(token);
-        } else if (exict(token)) {
+        } else if (exist(token)) {
             while (!stack.empty() && greaterPrecedence(token, stack.front())) {
                 tmp = stack.front();
                 output.push_back(tmp);
@@ -86,15 +86,12 @@ Expression *ShuntingYard::stringToExpression(string parameters) {
     return nullptr;
 }
 
-string ShuntingYard::arangeSpaces(string parameter) {
+string ShuntingYard::arrangeSpaces(string parameter) {
     string buff;
     for (char i : parameter) {
-        if (exict(charToString(i))) {
-            buff = addOprator(buff, i);
+        if (exist(charToString(i))) {
+            buff = addOperator(buff, i);
         } else if (charToString(i) == RIGHT_B || charToString(i) == LEFT_B) {
-            /*  buff += DIV;
-              buff += i;
-              buff += DIV;*/
             buff = addB(buff, i);
         } else if (i != ' ') {
             buff += i;
@@ -103,12 +100,12 @@ string ShuntingYard::arangeSpaces(string parameter) {
     return buff;
 }
 
-bool ShuntingYard::exict(string c) {
+bool ShuntingYard::exist(string c) {
     return operators.count(c) != 0;
 }
 
 bool ShuntingYard::greaterPrecedence(string token, string other) {
-    return (exict(other) && operators[other] >= operators[token]);
+    return (exist(other) && operators[other] >= operators[token]);
 }
 
 Expression *ShuntingYard::innerExp(deque<string> *exp) {
@@ -118,7 +115,7 @@ Expression *ShuntingYard::innerExp(deque<string> *exp) {
         string token = exp->front();
         exp->pop_front();
         // operator
-        if (exict(token) && token != "~") {
+        if (exist(token) && token != "~") {
             Expression *b = stack.top();
             stack.pop();
             Expression *a = stack.top();
@@ -147,7 +144,7 @@ Expression *ShuntingYard::innerExp(deque<string> *exp) {
             result = new Var(token);
         }
         if (result == nullptr) {
-            throw "ileagal math expression";
+            throw "illegal math expression";
         }
         stack.push(result);
     }
@@ -164,13 +161,13 @@ string ShuntingYard::charToString(char c) {
     return p;
 }
 
-string ShuntingYard::addOprator(string buff, char op) {
+string ShuntingYard::addOperator(string buff, char op) {
     unsigned long length = buff.size();
     string c;
     if (length >= 2) {
         c = charToString(buff[length - 2]);
     }
-    if (buff.empty() || c == RIGHT_B || exict(c)) {
+    if (buff.empty() || c == RIGHT_B || exist(c)) {
         //start of the string || first after braces || after an operator
         if (op == '-') {
             if (c == "+") {
@@ -198,7 +195,7 @@ string ShuntingYard::addB(string buff, char b) {
     if (charToString(b) == RIGHT_B) {
         if (c == "~") {
             buff += '1';
-            buff = addOprator(buff, '*');
+            buff = addOperator(buff, '*');
 
         }
     }

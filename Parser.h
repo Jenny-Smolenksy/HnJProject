@@ -28,6 +28,8 @@ public:
 
     void runner(vector<deque<string>> commands);
 
+    void runCommand(deque<string> command);
+
 
 };
 
