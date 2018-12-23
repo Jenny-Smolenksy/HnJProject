@@ -75,7 +75,7 @@ string Lexer::separateLine(string line) {
             buff += DIV;
         } else if (line[i] != space) {
             buff += line[i];
-        } else if (line[i] == space && ((Utiies::isMathOperator(line[i - 1])) || Utiies::isMathOperator(line[i + 1]))) {
+        } else if (line[i] == space && ((Utiies::isAnOperaror(line[i - 1])) || Utiies::isAnOperaror(line[i + 1]))) {
             //space before  or after operator - skip it
             continue;
         } else if (line[i] == space && !buff.empty()) {

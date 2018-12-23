@@ -36,6 +36,13 @@ public:
      */
     static bool isMathOperator(char op);
 
+    /**
+     * check id its boolian or math operator
+     * @param op
+     * @return
+     */
+    static bool isAnOperaror(char op);
+
 };
 
 

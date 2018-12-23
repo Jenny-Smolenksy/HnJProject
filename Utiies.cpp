@@ -5,7 +5,7 @@
 #include <sstream>
 #include "Utiies.h"
 
-deque <string> Utiies::splitBy(string line, char c) {
+deque<string> Utiies::splitBy(string line, char c) {
 
     stringstream easy2split(line);
     string part;
@@ -21,9 +21,13 @@ deque <string> Utiies::splitBy(string line, char c) {
 }
 
 bool Utiies::isBoolianOperator(char op) {
-    return (op=='='||op=='>'||op=='!'||op=='<');
+    return (op == '=' || op == '>' || op == '!' || op == '<');
 }
 
 bool Utiies::isMathOperator(char op) {
-    return (op=='+'||op=='-'||op=='*'||op=='/');
+    return (op == '+' || op == '-' || op == '*' || op == '/');
+}
+
+bool Utiies::isAnOperaror(char op) {
+    return isMathOperator(op) || isBoolianOperator(op);
 }
