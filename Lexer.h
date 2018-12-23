@@ -61,6 +61,8 @@ public:
     void getScope(deque<string> *lines, deque<string> *scopeCommand);
 
 
+
+
 };
 
 

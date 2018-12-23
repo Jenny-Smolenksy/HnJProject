@@ -6,6 +6,7 @@
 #include "Utiies.h"
 
 deque <string> Utiies::splitBy(string line, char c) {
+
     stringstream easy2split(line);
     string part;
     deque<string> allparts;

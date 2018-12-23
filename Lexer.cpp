@@ -70,11 +70,12 @@ string Lexer::separateLine(string line) {
     string buff;
     char space = ' ';
     for (int i = 0; i < line.size(); i++) {
-        if (line[i] == '=') {
+        if (line[i] == '=' && !Utiies::isBoolianOperator(line[i + 1]) &&
+            !Utiies::isBoolianOperator(buff[buff.length() - 1])) {
             buff += DIV;
         } else if (line[i] != space) {
             buff += line[i];
-        } else if (line[i] == space && ((Utiies::isMathOperator(line[i-1])) || Utiies::isMathOperator(line[i+1]))) {
+        } else if (line[i] == space && ((Utiies::isMathOperator(line[i - 1])) || Utiies::isMathOperator(line[i + 1]))) {
             //space before  or after operator - skip it
             continue;
         } else if (line[i] == space && !buff.empty()) {
@@ -85,8 +86,6 @@ string Lexer::separateLine(string line) {
     }
     return buff;
 }
-
-
 
 
 /**
@@ -118,7 +117,6 @@ deque<string> Lexer::getLines(string fileName) {
 }
 
 
-
 /**
  * Arrange for a scope to be as one command deque with a DIVIDER flag
  * separates the commands from each other
@@ -136,6 +134,7 @@ void Lexer::getScope(deque<string> *lines, deque<string> *scopeCommand) {
         singleCommand = splitCommand(lines->front());
 
         if (singleCommand[0] == "while" || singleCommand[0] == "if") {
+            lines->pop_front();
             //a scope with in a scope
             getScope(lines, scopeCommand);
 
@@ -155,6 +154,9 @@ void Lexer::getScope(deque<string> *lines, deque<string> *scopeCommand) {
 
 
 }
+
+
+
 
 
 
