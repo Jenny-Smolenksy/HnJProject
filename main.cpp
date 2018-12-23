@@ -48,17 +48,18 @@ deque<string> getScope() {
  */
 void runFromCommandLine() {
     string line;
-    getline(cin, line);
-    Lexer *lex = Lexer::getInstance();
-    Parser *p = Parser::getInstance();
-    deque<string> command = lex->splitCommand(line);
-    if (command[0] == "while" || command[0] == "if") {
-        //read a scope and them execute it
-        deque<string> scope = getScope();
-        lex->getScope(&scope, &command);
+    while (true) {
+        getline(cin, line);
+        Lexer *lex = Lexer::getInstance();
+        Parser *p = Parser::getInstance();
+        deque<string> command = lex->splitCommand(line);
+        if (command[0] == "while" || command[0] == "if") {
+            //read a scope and them execute it
+            deque<string> scope = getScope();
+            lex->getScope(&scope, &command);
+        }
+        p->runCommand(command);
     }
-    p->runCommand(command);
-
 
 }
 
@@ -67,6 +68,7 @@ void runFromCommandLine() {
  * @param fileName
  */
 void runFromFile(string fileName) {
+
     Lexer *lex = Lexer::getInstance();
     vector<deque<string>> res;
     res = lex->lexFromFile(std::move(fileName));
@@ -77,17 +79,11 @@ void runFromFile(string fileName) {
 }
 
 int main(int arg, char *argv[]) {
-    std::cout << "have a great week, Hilla!" << std::endl;
-    Lexer *lex = Lexer::getInstance();
     vector<deque<string>> res;
-    if (arg != 2) {
+    if (arg == 2) {
         runFromFile(argv[1]);
     } else {
-        int a = 5;
-        while (a > 0) {
-            runFromCommandLine();
-            a--;
-        }
+        runFromCommandLine();
     }
 
     return 0;
