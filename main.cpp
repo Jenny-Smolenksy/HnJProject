@@ -9,7 +9,15 @@ using namespace std;
 int main(int arg, char *argv[]) {
     std::cout << "have a great week, Hilla!" << std::endl;
     Lexer *lex = Lexer::getInstance();
-    vector<deque<string>> res = lex->lexFromFile(argv[1]);
+    vector<deque<string>> res;
+    if (arg == 2) {
+        res = lex->lexFromFile(argv[1]);
+    } else {
+        for (int i = 0; i < arg; i++) {
+            res.push_back(lex->splitCommand(argv[i]));
+
+        }
+    }
     Parser *p = Parser::getInstance();
     p->runner(res);
     ShuntingYard *calculator = ShuntingYard::getInstance();
@@ -20,7 +28,7 @@ int main(int arg, char *argv[]) {
 
     //lets try build a lexer without loss of generality daaa
 
-    SymbolsTable* table = SymbolsTable::getInstance();
+    SymbolsTable *table = SymbolsTable::getInstance();
     cout << table->getValue("alt") << endl;
 
     return 0;
