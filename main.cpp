@@ -20,8 +20,9 @@ int main(int arg, char *argv[]) {
 
     //lets try build a lexer without loss of generality daaa
 
-    SymbolsTable* table = SymbolsTable::getInstance();
-    cout << table->getValue("alt") << endl;
+    while(true) {
+        //infinite thread
+    }
 
     return 0;
 }
