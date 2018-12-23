@@ -11,9 +11,10 @@
 /**
  * simple minus class to calculate minus Expressions
  */
-class Minus : public BinaryExpression{
+class Minus : public BinaryExpression {
 public:
     double calculate() override;
+
     Minus(Expression *r, Expression *l);
 
 };

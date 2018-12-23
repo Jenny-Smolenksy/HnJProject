@@ -15,5 +15,4 @@ public:
 };
 
 
-
 #endif //HNJPROJECT_DEDINEVARCOMMAND_H

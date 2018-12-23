@@ -7,12 +7,12 @@
 #include <list>
 #include <stack>
 #include "ShuntingYard.h"
-#include "Utiies.h"
 #include "Expressions/Binary/Plus.h"
 #include "Expressions/Binary/Multiply.h"
 #include "Expressions/Binary/Minus.h"
 #include "Expressions/Binary/Div.h"
 #include "Expressions/Unary/Neg.h"
+#include "Utiies.h"
 
 #define DIV ","
 #define RIGHT_B "("

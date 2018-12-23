@@ -15,7 +15,7 @@ using namespace std;
 class ShuntingYard {
 private:
     static ShuntingYard *instance;
-    vector<Expression*> expToDel;
+    vector<Expression *> expToDel;
 
     ShuntingYard() = default;
 

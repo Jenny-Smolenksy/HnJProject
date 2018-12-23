@@ -5,7 +5,7 @@
 #include "Equals.h"
 
 double Equals::calculate() {
-    if(right->calculate()==left->calculate()){
+    if (right->calculate() == left->calculate()) {
         return 1;
     }
     return 0;

@@ -5,8 +5,6 @@
 //
 
 #include <fstream>
-#include <sstream>
-#include <algorithm>
 #include "Lexer.h"
 #include "Utiies.h"
 

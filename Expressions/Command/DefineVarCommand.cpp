@@ -11,7 +11,7 @@ int DefineVarCommand::execute(deque<string> act) {
     SymbolsTable *s = SymbolsTable::getInstance();
     if (act[1] == "bind") {
         s->addSymbol(act[0], act[2]);
-        cout << act[0] + " need to bind to "+act[2] << endl;
+        cout << act[0] + " need to bind to " + act[2] << endl;
         return 0;
     }
 

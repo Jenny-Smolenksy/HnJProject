@@ -9,11 +9,13 @@
 //TODO add if needed the seed 10
 class Server {
     int sockfd;
-    SymbolsTable* symbolsTable;
+    SymbolsTable *symbolsTable;
 
 public:
 
     Server(int portNumber);
+
     void listen();
+
     ~Server();
 };

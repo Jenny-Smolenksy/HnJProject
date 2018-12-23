@@ -11,8 +11,8 @@
 class Neg : public UnaryExpression {
 public:
     double calculate() override;
-    Neg(Expression *e);
 
+    Neg(Expression *e);
 
 
 };

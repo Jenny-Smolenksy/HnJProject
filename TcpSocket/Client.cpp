@@ -29,14 +29,15 @@ Client::Client(string serverAddress, int portNumber) {
     //set socket params for tcp, ip adress and port as given
     bzero((char *) &this->serverAddr, sizeof(this->serverAddr));
     this->serverAddr.sin_family = AF_INET;
-    bcopy(server->h_addr, (char *)&this->serverAddr.sin_addr.s_addr, (size_t )server->h_length);
-    this->serverAddr.sin_port = htons((u_int16_t )portNumber);
+    bcopy(server->h_addr, (char *) &this->serverAddr.sin_addr.s_addr, (size_t) server->h_length);
+    this->serverAddr.sin_port = htons((u_int16_t) portNumber);
 
     /* connect to the server */
-    if (connect(sockfd, (struct sockaddr*)&this->serverAddr, sizeof(this->serverAddr)) < ZERO) {
+    if (connect(sockfd, (struct sockaddr *) &this->serverAddr, sizeof(this->serverAddr)) < ZERO) {
         throw "wrong server ip";
     }
 }
+
 /**
  * send message to server
  * @param message string to send
@@ -44,18 +45,18 @@ Client::Client(string serverAddress, int portNumber) {
 void Client::sendMessage(string message) {
 
     //Send message to the server
-    int resultCode = (int)write(sockfd, message.c_str(), message.length());
+    int resultCode = (int) write(sockfd, message.c_str(), message.length());
 
     //case failed
     if (resultCode < ZERO) {
 
         //try to reconnect
-        if (connect(sockfd, (struct sockaddr*)&this->serverAddr, sizeof(this->serverAddr)) < ZERO) {
+        if (connect(sockfd, (struct sockaddr *) &this->serverAddr, sizeof(this->serverAddr)) < ZERO) {
             //failed to reconnect
             throw "ERROR writing to socket";
         } else {
             //reconnected successfully - resend message
-            resultCode = (int)write(sockfd, message.c_str(), message.length());
+            resultCode = (int) write(sockfd, message.c_str(), message.length());
         }
     }
 
@@ -76,6 +77,7 @@ void Client::sendMessage(string message) {
     }
      */
 }
+
 /**
  * destructor for client
  */

@@ -18,6 +18,8 @@ class Client {
 public:
 
     Client(std::string serverAddress, int portNumber);
+
     void sendMessage(string message);
+
     ~Client();
 };

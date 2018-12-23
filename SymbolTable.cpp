@@ -1,7 +1,5 @@
 #include "SymbolTable.h"
-#include <pthread.h>
 #include <iostream>
-#include <unistd.h>
 
 /*const params */
 #define KEY_1 "/instrumentation/airspeed-indicator/indicated-speed-kt"
@@ -126,7 +124,7 @@ void SymbolsTable::updateValues(string dataString) {
 
 double SymbolsTable::getValue(string symbol) {
 
-    if(!exist(symbol)) {
+    if (!exist(symbol)) {
         throw "no such symbol";
     }
 
@@ -135,9 +133,9 @@ double SymbolsTable::getValue(string symbol) {
     //int valueIndex = (pathToValueIndexMap[path]);
 
     //TODO: get this ugly code changed
-    map<string,int>::iterator iter = pathToValueIndexMap.begin();
+    map<string, int>::iterator iter = pathToValueIndexMap.begin();
     bool flag = false;
-    while( !flag && iter != pathToValueIndexMap.end()) {
+    while (!flag && iter != pathToValueIndexMap.end()) {
 
         if (iter->first.compare(path)) {
             flag = true;

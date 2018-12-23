@@ -33,9 +33,13 @@ public:
     static SymbolsTable *getInstance();
 
     void addSymbol(string symbol, string path);
+
     bool exist(string symbol);
+
     virtual ~SymbolsTable();
+
     void updateValues(string data);
+
     double getValue(string symbol);
 
     //   void updateLocalValueByPath(string path, double value);

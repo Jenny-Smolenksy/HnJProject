@@ -10,14 +10,14 @@
 
 int SleepCommand::execute(deque<string> act) {
     SymbolsTable *s = SymbolsTable::getInstance();
-    if(s->exist(act[0])){
+    if (s->exist(act[0])) {
         //if its var
         cout << "sleep for " + to_string(s->getValue(act[0])) << endl;
-    } else{
+    } else {
         ShuntingYard *shuntingYard = ShuntingYard::getInstance();
         Expression *x = shuntingYard->stringToExpression(act[0]);
         double val = x->calculate();
-        cout << "sleep for " +  to_string(val) << endl;
+        cout << "sleep for " + to_string(val) << endl;
     }
 
     return 0;

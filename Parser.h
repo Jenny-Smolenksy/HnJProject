@@ -16,7 +16,8 @@ using namespace std;
 class Parser {
     map<string, CommandExpression *> stringToCommandMap;
     static Parser *instance;
-    vector<CommandExpression*> expToDEL;
+    vector<CommandExpression *> expToDEL;
+
     Parser() = default;
 
     void setMap();

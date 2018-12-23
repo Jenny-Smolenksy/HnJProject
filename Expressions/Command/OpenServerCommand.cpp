@@ -5,7 +5,6 @@
 #include <iostream>
 #include "OpenServerCommand.h"
 #include "../../ShuntingYard.h"
-#include "../Expression.h"
 
 
 int OpenServerComman::execute(deque<string> act) {
