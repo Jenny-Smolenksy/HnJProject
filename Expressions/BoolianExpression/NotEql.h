@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_NOTEQL_H
 #define HNJPROJECT_NOTEQL_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /**
  * Not eqal
  */
-class NotEql : public BoolianExpression {
+class NotEql : public BooleanExpression {
 public:
     double calculate() override;
 

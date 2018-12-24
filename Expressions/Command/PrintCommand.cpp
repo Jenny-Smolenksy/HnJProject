@@ -8,7 +8,6 @@
 #include "../../ShuntingYard.h"
 
 int PrintCommand::execute(deque<string> act) {
-    SymbolsTable *s = SymbolsTable::getInstance();
     if (act[0].at(0) == '"') {
         //simple print
         string stringHolder;

@@ -1,10 +1,11 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #include "NaryLesser.h"
+#include <utility>
 
-NaryLesser::NaryLesser(string r, string l) : BoolianExpression(r, l) {
+NaryLesser::NaryLesser(string r, string l) : BooleanExpression(std::move(r), std::move(l)) {
 
 }
 

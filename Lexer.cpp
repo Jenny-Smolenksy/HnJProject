@@ -1,7 +1,7 @@
 #include <utility>
 
 //
-// Created by hilla on 12/19/18.
+// Created by Jenny && Hilla
 //
 
 #include <fstream>
@@ -67,8 +67,8 @@ string Lexer::separateLine(string line) {
     string buff;
     char space = ' ';
     for (int i = 0; i < line.size(); i++) {
-        if (line[i] == '=' && !Utils::isBoolianOperator(line[i + 1]) &&
-            !Utils::isBoolianOperator(buff[buff.length() - 1])) {
+        if (line[i] == '=' && !Utils::isBooleanOperator(line[i + 1]) &&
+            !Utils::isBooleanOperator(buff[buff.length() - 1])) {
             buff += DIV;
         } else if (line[i] != space) {
             buff += line[i];

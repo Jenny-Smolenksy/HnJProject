@@ -1,12 +1,12 @@
 //
-// Created by hilla on 12/20/18.
+// Created by Jenny && Hilla
 //
 
 #include "Div.h"
 
 double Div::calculate() {
     if (left->calculate() == 0) {
-        throw "division by zero is frobbiden";
+        throw "division by zero is not legal";
     }
     return right->calculate() / left->calculate();
 }

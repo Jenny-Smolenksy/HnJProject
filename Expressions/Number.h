@@ -18,7 +18,7 @@ public:
 
     double calculate() override;
 
-    double calculate(deque<string> p);
+    double calculate(deque<string> p) override;
 };
 
 

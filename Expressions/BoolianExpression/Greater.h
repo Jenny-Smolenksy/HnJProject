@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_GREATER_H
 #define HNJPROJECT_GREATER_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /***
  * Greater
  */
-class Greater : public BoolianExpression {
+class Greater : public BooleanExpression {
 public:
     double calculate() override;
 

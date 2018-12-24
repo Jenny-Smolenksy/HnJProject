@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/19/18.
+// Created by Jenny && Hilla
 //
 
 #include "Parser.h"
@@ -11,6 +11,7 @@
 #include "Expressions/Command/ConditionParser.h"
 #include "Expressions/Command/LoopComand.h"
 #include "Expressions/Command/OpenServerCommand.h"
+#include "Expressions/Command/IfCommand.h"
 
 Parser *Parser::instance = nullptr;
 
@@ -28,17 +29,25 @@ Parser *Parser::getInstance() {
 void Parser::setMap() {
     stringToCommandMap["var"] = new CommandExpression(new DefineVarCommand());
     expToDEL.push_back(stringToCommandMap["var"]);
+
     stringToCommandMap["openDataServer"] = new CommandExpression(new OpenServerComman());
     expToDEL.push_back(stringToCommandMap["openDataServer"]);
+
     stringToCommandMap["connect"] = new CommandExpression(new ConnectCommand());
     expToDEL.push_back(stringToCommandMap["connect"]);
+
     stringToCommandMap["print"] = new CommandExpression(new PrintCommand());
     expToDEL.push_back(stringToCommandMap["print"]);
+
     stringToCommandMap["sleep"] = new CommandExpression(new SleepCommand());
     expToDEL.push_back(stringToCommandMap["sleep"]);
-    stringToCommandMap["sleep"] = new CommandExpression(new SleepCommand());
-    expToDEL.push_back(stringToCommandMap["while"]);
+
     stringToCommandMap["while"] = new CommandExpression(new LoopComand());
+    expToDEL.push_back(stringToCommandMap["while"]);
+
+    stringToCommandMap["if"] = new CommandExpression(new IfCommand());
+    expToDEL.push_back(stringToCommandMap["if"]);
+
 }
 
 /**

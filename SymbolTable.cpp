@@ -1,7 +1,5 @@
 #include "SymbolTable.h"
-#include <pthread.h>
 #include <iostream>
-#include <unistd.h>
 
 /*const params */
 #define KEY_1 "/instrumentation/airspeed-indicator/indicated-speed-kt"
@@ -80,6 +78,7 @@ SymbolsTable *SymbolsTable::getInstance() {
     }
     return instance;
 }
+
 /**
  * check if symbol has been difine and binded
  * @param symbol
@@ -104,8 +103,7 @@ void SymbolsTable::addSymbol(string symbol, string path) {
         } else {
             symbolToPathMap.insert(pair<string, string>(symbol, wishPath));
         }
-    }
-    else {//case bind to path
+    } else {//case bind to path
 
         if (exist(symbol)) {
             //update
@@ -115,6 +113,7 @@ void SymbolsTable::addSymbol(string symbol, string path) {
         }
     }
 }
+
 /**
  * get path of symbol
  * @param symbol
@@ -129,6 +128,7 @@ string SymbolsTable::getPath(string symbol) {
     return path;
 
 }
+
 /**
  * update common values
  * @param dataString
@@ -163,6 +163,7 @@ void SymbolsTable::updateValues(string dataString) {
     //release lock
     pthread_mutex_unlock(&mutex);
 }
+
 /**
  * get value of common symbol
  * @param symbol
@@ -170,7 +171,7 @@ void SymbolsTable::updateValues(string dataString) {
  */
 double SymbolsTable::getCommonValue(string symbol) {
 
-    if(!exist(symbol)) {
+    if (!exist(symbol)) {
         throw "no such symbol";
     }
 
@@ -178,6 +179,7 @@ double SymbolsTable::getCommonValue(string symbol) {
 
     return getValueFromPath(path);
 }
+
 /**
  * check if symbol is common
  * @param symbol
@@ -196,11 +198,11 @@ bool SymbolsTable::isCommonSymbol(string symbol) {
  */
 double SymbolsTable::getValueFromPath(string path) {
 
-    map<string,int>::iterator iter = pathToValueIndexMap.begin();
+    auto iter = pathToValueIndexMap.begin();
     bool found = false;
-    while( !found && iter != pathToValueIndexMap.end()) {
+    while (!found && iter != pathToValueIndexMap.end()) {
 
-        if (iter->first.compare(path)) {
+        if (iter->first == path) {
             found = true;
         } else {
             iter++;
@@ -226,14 +228,16 @@ double SymbolsTable::getValueFromPath(string path) {
 
     return result;
 }
+
 /**
  * check if symbol it temp symbols
  * @param symbol
  * @return
  */
 bool SymbolsTable::isTempValue(string symbol) {
-    return (tempValuesMap.count(symbol) != 0) ;
+    return (tempValuesMap.count(symbol) != 0);
 }
+
 /**
  * get temp symbol value
  * @param symbol
@@ -241,12 +245,13 @@ bool SymbolsTable::isTempValue(string symbol) {
  */
 double SymbolsTable::getTempValue(string symbol) {
 
-    map<string, double >::iterator iter = tempValuesMap.find(symbol);
+    auto iter = tempValuesMap.find(symbol);
     if (iter == tempValuesMap.end()) {
         throw "no symbol";
     }
     return iter->second;
 }
+
 /**
  * add temp symbol value, temp = unbinded
  * @param symbol

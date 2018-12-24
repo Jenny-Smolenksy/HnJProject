@@ -1,13 +1,13 @@
 #include <utility>
 
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 #include "../../ShuntingYard.h"
 
-BoolianExpression::BoolianExpression(string r, string l) {
+BooleanExpression::BooleanExpression(string r, string l) {
     ShuntingYard *shuntingYard = ShuntingYard::getInstance();
     right = shuntingYard->stringToExpression(std::move(r));
     left = shuntingYard->stringToExpression(std::move(l));
@@ -15,10 +15,10 @@ BoolianExpression::BoolianExpression(string r, string l) {
 
 }
 
-double BoolianExpression::calculate() {
+double BooleanExpression::calculate() {
     return 0;
 }
 
-double BoolianExpression::calculate(deque<string> p) {
+double BooleanExpression::calculate(deque<string> p) {
     return 0;
 }

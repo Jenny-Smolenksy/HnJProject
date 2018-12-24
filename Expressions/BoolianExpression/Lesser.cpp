@@ -1,10 +1,11 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #include "Lesser.h"
+#include <utility>
 
-Lesser::Lesser(string r, string l) : BoolianExpression(r, l) {
+Lesser::Lesser(string r, string l) : BooleanExpression(std::move(r), std::move(l)) {
 
 }
 

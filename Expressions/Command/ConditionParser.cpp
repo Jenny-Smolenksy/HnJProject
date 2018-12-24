@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #include <unordered_set>
@@ -27,7 +27,7 @@ void ConditionParser::setCondition(string condition) {
     string op;
     bool next = false;
     for (char i : condition) {
-        if (Utils::isBoolianOperator(i)) {
+        if (Utils::isBooleanOperator(i)) {
             //build operator/move on to next string
             next = true;
             op += i;
@@ -50,7 +50,7 @@ void ConditionParser::setCondition(string condition) {
 * set condition according to the operator
 * @param r  right string
 * @param l   left string
-* @param op ther operator
+* @param op the operator
  */
 void ConditionParser::finalSet(string r, string l, string op) {
     if (op == "==") {
@@ -79,18 +79,18 @@ void ConditionParser::finalSet(string r, string l, string op) {
 
 /**
  * set commands
- * @param comandsToseperate
+ * @param commandsToseperate
  */
-void ConditionParser::setCommands(deque<string> comandsToseperate) {
-    while (!comandsToseperate.empty()) {
+void ConditionParser::setCommands(deque<string> commandsToseperate) {
+    while (!commandsToseperate.empty()) {
         deque<string> command;
-        while (!comandsToseperate.empty() && comandsToseperate.front() != "DIVIDER") {
+        while (!commandsToseperate.empty() && commandsToseperate.front() != "DIVIDER") {
             //read a single command
-            command.push_back(comandsToseperate.front());
-            comandsToseperate.pop_front();
+            command.push_back(commandsToseperate.front());
+            commandsToseperate.pop_front();
         }
-        if (!comandsToseperate.empty()) {
-            comandsToseperate.pop_front();
+        if (!commandsToseperate.empty()) {
+            commandsToseperate.pop_front();
         }
         //insert it to our set of comandsToseperate
         this->commands.push_back(command);

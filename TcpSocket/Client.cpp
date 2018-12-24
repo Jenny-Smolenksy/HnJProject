@@ -51,7 +51,7 @@ void Client::connectToServer(string serverAddress, int portNumber) {
 void Client::sendMessage(string message) {
 
     //Send message to the server
-    int resultCode = (int)write(sockfd, message.c_str(), message.length());
+    auto resultCode = (int)write(sockfd, message.c_str(), message.length());
 
     cout << "send message to server: " ;
     cout << message << endl;
@@ -73,7 +73,7 @@ void Client::sendMessage(string message) {
 string Client::sendMessageWithFeedback(string message) {
 
     //Send message to the server
-    int resultCode = (int)write(sockfd, message.c_str(), message.length());
+    auto resultCode = (int)write(sockfd, message.c_str(), message.length());
 
     //check message sent
     if (resultCode < ZERO) {

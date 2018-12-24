@@ -1,5 +1,7 @@
+#include <utility>
+
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #include <iostream>
@@ -10,8 +12,10 @@
 #include "../../Utils.h"
 #include <sstream>
 
-
 int DefineVarCommand::execute(deque<string> act) {
+    if (!validName(act[0])) {
+        throw "not a valid name";
+    }
     SymbolsTable *symbolsTable = SymbolsTable::getInstance();
 
     //case the command is to bind
@@ -34,9 +38,9 @@ int DefineVarCommand::execute(deque<string> act) {
             string path = symbolsTable->getPath(act[0]);
             setValue(path, val);
 
-        } catch (const char* message) {
+        } catch (const char *message) {
             cout << message << endl;
-            return  -1;
+            return -1;
         }
         return 0;
     }
@@ -59,13 +63,36 @@ int DefineVarCommand::setValue(string path, double value) {
     strs << value;
     string valueStr = strs.str();
 
-    ClientStream* clientStream = ClientStream::getInstance();
+    ClientStream *clientStream = ClientStream::getInstance();
 
     //create message
-    string message = clientStream->messageFormatSet(path, valueStr);
+    string message = clientStream->messageFormatSet(std::move(path), valueStr);
 
     //send message
     clientStream->sendMessage(message);
 
+}
+
+bool DefineVarCommand::validName(string name) {
+    if (isSaveWord(name)) {
+        //saved word
+        return false;
+    }
+    if (isdigit(name[0])) {
+        //starts with a number
+        return false;
+    }
+    for (char i :name) {
+        if (!(isdigit(i) || isalpha(i) || i == '_')) {
+            //not a valid character
+            return false;
+        }
+    }
+    return true;
+}
+
+bool DefineVarCommand::isSaveWord(string name) {
+    return (name == "if" || name == "var" || name == "while" || name == "print" || name == "sleep" ||
+            name == "connect" || name == "exit" || name == "openDataServer");
 }
 

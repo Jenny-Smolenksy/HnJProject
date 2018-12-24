@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_NARYGREATER_H
 #define HNJPROJECT_NARYGREATER_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /**
  * Greater or Equal
  */
-class NaryGreater : public BoolianExpression {
+class NaryGreater : public BooleanExpression {
 public:
     double calculate() override;
 

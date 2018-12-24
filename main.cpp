@@ -41,18 +41,20 @@ deque<string> getScope() {
     return lines;
 }
 
+
+
 /**
  * read from CMd
  */
 void runFromCommandLine() {
     string line;
+    Lexer *lex = Lexer::getInstance();
+    Parser *p = Parser::getInstance();
     while (true) {
         getline(cin, line);
         if (line == "exit") {
             break;
         }
-        Lexer *lex = Lexer::getInstance();
-        Parser *p = Parser::getInstance();
         deque<string> command = lex->splitCommand(line);
         if (command[0] == "while" || command[0] == "if") {
             //read a scope and them execute it
@@ -75,7 +77,9 @@ void runFromFile(string fileName) {
     Parser *p = Parser::getInstance();
     p->runner(res);
 
+    while(true) {}
 }
+
 
 int main(int arg, char *argv[]) {
 

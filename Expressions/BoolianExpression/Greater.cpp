@@ -1,8 +1,9 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #include "Greater.h"
+#include <utility>
 
 double Greater::calculate() {
     if (right->calculate() > left->calculate()) {
@@ -11,6 +12,6 @@ double Greater::calculate() {
     return 0;
 }
 
-Greater::Greater(string r, string l) : BoolianExpression(r, l) {
+Greater::Greater(string r, string l) : BooleanExpression(std::move(r), std::move(l)) {
 
 }

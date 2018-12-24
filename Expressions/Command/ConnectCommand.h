@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_CONNECT_H
@@ -10,7 +10,7 @@
 
 class ConnectCommand : public Command {
 public:
-    virtual int execute(deque<string> act);
+    int execute(deque<string> act) override;
 
 };
 

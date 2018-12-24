@@ -16,7 +16,7 @@ ClientStream *ClientStream::instance = nullptr;
  */
 void* threadSendMessageFunc(void *args) {
 
-    ClientStream::MESSAGE_PARAMS* params =
+    auto * params =
             (ClientStream::MESSAGE_PARAMS *)args;
     params->client->sendMessage(params->message);
 
@@ -30,7 +30,7 @@ void* threadSendMessageFunc(void *args) {
  */
 void* threadConnectFunc(void *args) {
 
-    ClientStream::CONNECT_PARAMS* params =
+    auto * params =
             (ClientStream::CONNECT_PARAMS*)args;
     params->client->connectToServer(params->address, params->port);
 
@@ -43,7 +43,7 @@ void* threadConnectFunc(void *args) {
  */
 void* threadSendMessageFeedback(void *args) {
 
-    ClientStream::MESSAGE_PARAMS* params =
+    auto * params =
             (ClientStream::MESSAGE_PARAMS *)args;
     string result = params->client->sendMessageWithFeedback(params->message);
 
@@ -71,7 +71,7 @@ ClientStream* ClientStream::getInstance() {
  */
 int ClientStream::connect(string message, int port) {
 
-    CONNECT_PARAMS* params = new CONNECT_PARAMS{client, message, port};
+    auto * params = new CONNECT_PARAMS{client, message, port};
     pthread_t threadId;
     try {
         pthread_create(&threadId, nullptr, threadConnectFunc, params);
@@ -173,7 +173,6 @@ double ClientStream::getValueFromMessage(string message, string path) {
     unsigned long endPosition;
     double currentValue = 0;
     string currentPath;
-    int arrayIndex = 0;
 
     //go over the string
     (endPosition = message.find(SPACE));
