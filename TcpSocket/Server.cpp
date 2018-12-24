@@ -39,11 +39,11 @@ Server::Server(int portNumber, int timesPerSec) {
     this->timesPerSec = timesPerSec / MILISEC;
 }
 /**
- * start listening on given port
+ * server waiting for connection, stop when a client enters
+ * @return
  */
-void Server::listen() {
-
-    int newsockfd, clilen;
+int Server::waitForConnection() {
+    int currentSocketFd, clilen;
     char buffer[256];
     struct sockaddr_in cli_addr = {};
     int  n;
@@ -52,25 +52,55 @@ void Server::listen() {
     clilen = sizeof(cli_addr);
 
     /* Accept actual connection from the client */
-    newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
+    currentSocketFd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
 
-    if (newsockfd < ZERO) {
+    if (currentSocketFd < ZERO) {
         throw "ERROR on accept";
+    }
+
+    bzero(buffer, PACKET_SIZE);
+    //read bytes
+    n = (int)read(currentSocketFd, buffer, (PACKET_SIZE - sizeof(char)));
+
+    //empty packet - lost connection
+    if (n < ZERO){
+        return -1;
+    }
+
+    cout << "first data from simulator: (only first will be printed)" << endl;
+    cout << buffer << endl;
+
+    //update values
+    symbolsTable->updateValues(buffer);
+
+    return currentSocketFd;
+}
+
+
+/**
+ * start listening on given port
+ */
+void Server::listen(int currentSocketFd) {
+
+    char buffer[256];
+    int  n;
+    if(currentSocketFd == -1) {
+        return; //nothing to listen to
     }
 
     /* If connection is established then start communicating */
     while(true) {
         bzero(buffer, PACKET_SIZE);
         //read bytes
-        n = (int)read(newsockfd, buffer, (PACKET_SIZE - sizeof(char)));
+        n = (int)read(currentSocketFd, buffer, (PACKET_SIZE - sizeof(char)));
 
         //empty packet - lost connection
         if (n < ZERO){
             return;
         }
 
-        cout << "data from simulator:" << endl;
-        cout << buffer << endl;
+       // cout << "data from simulator:" << endl;
+       // cout << buffer << endl;
 
         //update values
         symbolsTable->updateValues(buffer);

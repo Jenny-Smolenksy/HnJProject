@@ -18,7 +18,7 @@ int OpenServerComman::execute(deque<string> act) {
         //create server
        ServerStream* serverStream = ServerStream::getInstance();
        serverStream->createServer((int)val1, (int)val2);
-       serverStream->listen();
+       serverStream->startListen();
 
     } catch (const char* s) {
         cout << s << endl;

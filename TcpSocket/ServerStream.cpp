@@ -3,6 +3,11 @@
 
 ServerStream *ServerStream::instance = nullptr;
 
+struct PARAMS {
+    Server* server;
+    int socketFd;
+};
+
 /**
  * get object
  * @return
@@ -13,15 +18,32 @@ ServerStream* ServerStream::getInstance() {
     }
     return instance;
 }
+
 /**
  * thread function for server listen
  * @param arg
  * @return
  */
-void* threadFuncServer(void* arg) {
+void* threadFuncWaitForConnection(void* arg) {
 
-    ((Server*)arg)->listen();
+    PARAMS* params = (PARAMS*)arg;
+    int socketFd = params->server->waitForConnection();
+
+    params->socketFd = socketFd;
+    return params;
+
 }
+/**
+ * thread function for server listen
+ * @param arg
+ * @return
+ */
+void* threadFuncListen(void* arg) {
+
+    PARAMS* params = (PARAMS*)arg;
+    params->server->listen(params->socketFd);
+}
+
 /**
  * create server with given params
  * @param port
@@ -34,9 +56,20 @@ void ServerStream::createServer(int port, int readSpeed) {
 /**
  * open new thread to listen
  */
-void ServerStream::listen() {
-    pthread_create(&threadId, nullptr, threadFuncServer, server);
-    isListenning = true;
+void ServerStream::startListen() {
+
+    pthread_t threadIdWait;
+    int sockId;
+    PARAMS* params = new PARAMS{server, sockId};
+    void* result;
+
+    cout << "opening server.." << endl;
+    pthread_create(&threadIdWait, nullptr, threadFuncWaitForConnection, params);
+    pthread_join(threadIdWait, &result);
+    params = (PARAMS*)result;
+
+    cout << "client connected, listening to client" << endl;
+    pthread_create(&threadId, nullptr, threadFuncListen, params);
 }
 /**
  * distory object
