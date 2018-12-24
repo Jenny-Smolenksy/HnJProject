@@ -6,7 +6,6 @@
 #include "PrintCommand.h"
 #include "../../SymbolTable.h"
 #include "../../ShuntingYard.h"
-#include "../Expression.h"
 
 int PrintCommand::execute(deque<string> act) {
     SymbolsTable *s = SymbolsTable::getInstance();
@@ -14,7 +13,7 @@ int PrintCommand::execute(deque<string> act) {
         //simple print
         string stringHolder;
         while (!act.empty()) {
-            stringHolder = act.front() + " ";
+            stringHolder += act.front() + " ";
             act.pop_front();
         }
         cout << stringHolder << endl;

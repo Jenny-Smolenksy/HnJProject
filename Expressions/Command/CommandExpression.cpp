@@ -3,7 +3,6 @@
 //
 
 #include "CommandExpression.h"
-#include "../../ShuntingYard.h"
 
 double CommandExpression::calculate() {
     return 0;

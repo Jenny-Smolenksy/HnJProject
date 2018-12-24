@@ -3,7 +3,6 @@
 //
 
 #include "Parser.h"
-#include "Expressions/Command/DefineVarCommand.h"
 
 #include "Expressions/Command/ConnectCommand.h"
 #include "Expressions/Command/PrintCommand.h"
@@ -50,6 +49,9 @@ void Parser::setMap() {
 void Parser::runner(vector<deque<string>> commands) {
     //run each command
     for (deque<string> &command_line:commands) {
+        if (command_line[0] == "exit") {
+            break;
+        }
         runCommand(command_line);
     }
 }

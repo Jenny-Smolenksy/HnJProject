@@ -23,7 +23,6 @@ public:
     double calculate(deque<string> p) override;
 
 
-
 };
 
 

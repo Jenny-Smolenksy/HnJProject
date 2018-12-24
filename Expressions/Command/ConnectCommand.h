@@ -15,5 +15,4 @@ public:
 };
 
 
-
 #endif //HNJPROJECT_CONNECT_H

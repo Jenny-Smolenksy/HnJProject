@@ -5,7 +5,7 @@
 #include "Greater.h"
 
 double Greater::calculate() {
-    if(right->calculate()>left->calculate()){
+    if (right->calculate() > left->calculate()) {
         return 1;
     }
     return 0;

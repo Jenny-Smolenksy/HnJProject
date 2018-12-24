@@ -9,7 +9,7 @@ NaryGreater::NaryGreater(string r, string l) : BoolianExpression(r, l) {
 }
 
 double NaryGreater::calculate() {
-    if(right->calculate()>=left->calculate()){
+    if (right->calculate() >= left->calculate()) {
         return 1;
     }
     return 0;

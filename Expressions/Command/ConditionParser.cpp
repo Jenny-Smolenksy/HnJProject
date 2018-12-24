@@ -3,7 +3,6 @@
 //
 
 #include <unordered_set>
-#include <algorithm>
 #include "ConditionParser.h"
 #include "../BoolianExpression/Equals.h"
 #include "../BoolianExpression/Greater.h"

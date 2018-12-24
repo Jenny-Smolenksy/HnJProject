@@ -11,7 +11,7 @@
 /**
  * If command
  */
-class IfCommand : public ConditionParser{
+class IfCommand : public ConditionParser {
 
 public:
     int execute(deque<string> act) override;

@@ -7,6 +7,7 @@
 
 
 #include "BinaryExpression.h"
+
 /**
  * simple Multiply class to calculate Muliply Expressions
  */

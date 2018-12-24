@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Lexer.h"
 #include "ShuntingYard.h"
-#include "SymbolTable.h"
 #include "Parser.h"
 #include "TcpSocket/ClientStream.h"
 
@@ -49,6 +48,9 @@ void runFromCommandLine() {
     string line;
     while (true) {
         getline(cin, line);
+        if (line == "exit") {
+            break;
+        }
         Lexer *lex = Lexer::getInstance();
         Parser *p = Parser::getInstance();
         deque<string> command = lex->splitCommand(line);
@@ -76,6 +78,7 @@ void runFromFile(string fileName) {
 }
 
 int main(int arg, char *argv[]) {
+
     vector<deque<string>> res;
     if (arg == 2) {
         runFromFile(argv[1]);
