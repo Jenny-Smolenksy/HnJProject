@@ -11,7 +11,7 @@
  * @param serverAddress to connect to
  * @param portNumber to connect to
  */
-void Client::Connect(string serverAddress, int portNumber) {
+void Client::connectToServer(string serverAddress, int portNumber) {
 
     if (isConnected) {
         return;

@@ -32,7 +32,7 @@ void* threadConnectFunc(void *args) {
 
     ClientStream::CONNECT_PARAMS* params =
             (ClientStream::CONNECT_PARAMS*)args;
-    params->client->Connect(params->address, params->port);
+    params->client->connectToServer(params->address, params->port);
 
     delete params;
 }
