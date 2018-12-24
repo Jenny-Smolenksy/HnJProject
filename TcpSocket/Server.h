@@ -15,6 +15,7 @@ class Server {
 public:
 
     Server(int portNumber, int timesPerSec);
-    void listen();
+    void listen(int currentSocketFd);
+    int waitForConnection();
     ~Server();
 };

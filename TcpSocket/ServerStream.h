@@ -8,8 +8,7 @@ class ServerStream {
     Server* server;
     //id of thread
     pthread_t threadId;
-    bool isListenning;
-    ServerStream() { isListenning = false; }
+    ServerStream() {  }
 
 
 public:
@@ -17,7 +16,7 @@ public:
 
     void createServer(int port, int readSpeed);
 
-    void listen();
+    void startListen();
 
     ~ServerStream();
 };
