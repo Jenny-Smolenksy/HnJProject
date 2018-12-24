@@ -8,6 +8,9 @@
 
 #include "Expression.h"
 
+/**
+ * Var
+ */
 class Var : public Expression {
     string var;
 public:

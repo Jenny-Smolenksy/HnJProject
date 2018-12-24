@@ -21,3 +21,4 @@ double BinaryExpression::calculate(deque<string> p) {
 }
 
 
+

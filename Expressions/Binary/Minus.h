@@ -8,6 +8,9 @@
 
 #include "BinaryExpression.h"
 
+/**
+ * simple minus class to calculate minus Expressions
+ */
 class Minus : public BinaryExpression{
 public:
     double calculate() override;

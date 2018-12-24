@@ -6,20 +6,50 @@
 
 #include "Var.h"
 #include "../SymbolTable.h"
+#include "../TcpSocket/ClientStream.h"
 
+
+/**
+ * create val
+ * @param val
+ */
 Var::Var(string val) {
     var = std::move(val);
 
 }
 
+
 double Var::calculate() {
     SymbolsTable *s = SymbolsTable::getInstance();
-    if (s->exist(var)) {
-        return s->getValue(var);
-    } else {
-        //TODO: bring back later and check this
-        //throw "this variable is not in the system";
+
+    //check if var in temp values
+    if(s->isTempValue(var)) {
+        return s->getTempValue(var);
     }
+
+    //check if var is common symbol
+    if(s->isCommonSymbol(var)) {
+        return s->getCommonValue(var);
+    }
+
+    //get from server
+    if (s->exist(var)) {
+
+        ClientStream* clientStream = ClientStream::getInstance();
+
+        string path = s->getPath(var);
+        //create message
+        string message = clientStream->messageFormatGet(path);
+        //send message
+        string result = clientStream->sendFeedbackMessage(message);
+
+        cout << "message from server: "; cout << result << endl;
+        //get value from message
+        double value = clientStream->getValueFromMessage(result, path);
+        return value;
+
+    }
+    throw "this variable is not in the system";
 }
 
 double Var::calculate(deque<string> p) {

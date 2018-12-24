@@ -1,11 +1,3 @@
-//
-// Created by hilla on 12/18/18.
-//
-
-#ifndef HNJPROJECT_SYMBOLTABLE_H
-#define HNJPROJECT_SYMBOLTABLE_H
-
-
 #include <string>
 #include <map>
 
@@ -14,18 +6,26 @@
 using namespace std;
 
 /**
- * we would like to make it singelton so we will use private constractor and stutic instance
+ * we would like to make it singelton so we will use private constractor and static instance
  */
 class SymbolsTable {
 
 private:
     static SymbolsTable *instance;
 
-    SymbolsTable();
-
     map<string, string> symbolToPathMap;
+
     map<string, int> pathToValueIndexMap;
     double values[VALUES_SIZE] = {0};
+
+    //table of non binded values
+    map<string, double> tempValuesMap;
+
+
+    SymbolsTable();
+    double getValueFromPath(string path);
+
+
 
 
 public:
@@ -36,10 +36,12 @@ public:
     bool exist(string symbol);
     virtual ~SymbolsTable();
     void updateValues(string data);
-    double getValue(string symbol);
+    double getCommonValue(string symbol);
+    string getPath(string symbol);
+    void addTempValue(string symbol, double value);
+    bool isTempValue(string symbol);
+    double getTempValue(string symbol);
+    bool isCommonSymbol(string symbol);
 
-    //   void updateLocalValueByPath(string path, double value);
-    //  void setSymbol(string symbol, double value);
 };
 
-#endif //HNJPROJECT_SYMBOLTABLE_H

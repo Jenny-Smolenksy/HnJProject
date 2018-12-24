@@ -10,10 +10,11 @@
 class Server {
     int sockfd;
     SymbolsTable* symbolsTable;
+    int  timesPerSec;
 
 public:
 
-    Server(int portNumber);
+    Server(int portNumber, int timesPerSec);
     void listen();
     ~Server();
 };

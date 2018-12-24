@@ -12,6 +12,8 @@ class DefineVarCommand : public Command {
 public:
     virtual int execute(deque<string> act);
 
+    int setValue(string symbol, double value);
+
 };
 
 

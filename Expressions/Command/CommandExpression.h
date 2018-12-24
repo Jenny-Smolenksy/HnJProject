@@ -10,13 +10,16 @@
 #include "../Expression.h"
 #include "DefineVarCommand.h"
 
+/**
+ * Command Expression
+ */
 class CommandExpression : public Expression {
     Command *c;
 public:
 
     double calculate() override;
 
-    double calculate(deque<string> ) override;
+    double calculate(deque<string>) override;
 
 
     explicit CommandExpression(Command *pCommand);

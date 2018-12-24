@@ -9,6 +9,9 @@
 #include "../Var.h"
 #include "../Number.h"
 
+/**
+ * simple abstract class to deal with binary Expressions
+ */
 class BinaryExpression : public Expression {
 protected:
     Expression *right = nullptr;
@@ -20,6 +23,7 @@ public:
     double calculate() override;
 
     double calculate(deque<string> p) override;
+
 
 
 };

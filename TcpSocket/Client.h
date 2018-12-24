@@ -14,10 +14,13 @@ class Client {
     int sockfd;
     struct sockaddr_in serverAddr;
     struct hostent *server;
+    bool isConnected;
 
 public:
 
-    Client(std::string serverAddress, int portNumber);
+    Client() {}
+    void Connect(string serverAddress, int portNumber);
     void sendMessage(string message);
+    string sendMessageWithFeedback(string message);
     ~Client();
 };

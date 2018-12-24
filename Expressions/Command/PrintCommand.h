@@ -8,6 +8,9 @@
 
 #include "Command.h"
 
+/**
+ * print command
+ */
 class PrintCommand : public Command {
 public:
     int execute(deque<string> act) override;

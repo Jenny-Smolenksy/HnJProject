@@ -31,14 +31,16 @@
 
 pthread_mutex_t mutex;
 
-
+/**
+ * create object
+ */
 SymbolsTable::SymbolsTable() {
 
     pthread_mutex_init(&mutex, nullptr);
     //create table of path to value index
     int arrayIndex = 0;
-    //create map of string path to index in array of values
 
+    //create map of string path to index in array of values
     pathToValueIndexMap.insert(pair<string, int>(KEY_1, arrayIndex++));
     pathToValueIndexMap.insert(pair<string, int>(KEY_2, arrayIndex++));
     pathToValueIndexMap.insert(pair<string, int>(KEY_3, arrayIndex++));
@@ -63,39 +65,76 @@ SymbolsTable::SymbolsTable() {
     pathToValueIndexMap.insert(pair<string, int>(KEY_22, arrayIndex++));
     pathToValueIndexMap.insert(pair<string, int>(KEY_23, arrayIndex));
 }
-//Null, because instance will be initialized on demand
 
+//Null, because instance will be initialized on demand
 SymbolsTable *SymbolsTable::instance = nullptr;
 
+/**
+ * get instance of object
+ * @return symbol table
+ */
 SymbolsTable *SymbolsTable::getInstance() {
-    //TODO: delete instance at the end
     //singleton instance:
     if (instance == nullptr) {
         instance = new SymbolsTable();
     }
     return instance;
 }
-
+/**
+ * check if symbol has been difine and binded
+ * @param symbol
+ * @return
+ */
 bool SymbolsTable::exist(string symbol) {
     return (symbolToPathMap.count(symbol) != 0);
 }
 
-SymbolsTable::~SymbolsTable() {
-    pthread_mutex_destroy(&mutex);
-    delete instance;
-}
-
+/**
+ * add symbol to path connection
+ * @param symbol
+ * @param path
+ */
 void SymbolsTable::addSymbol(string symbol, string path) {
 
-    if (exist(symbol)) {
-        //update
-        symbolToPathMap[symbol] = path;
-    } else {
-        symbolToPathMap.insert(pair<string, string>(symbol, path));
+    if (exist(path)) { //case bind to another symbol
+
+        string wishPath = symbolToPathMap[path]; //path of other var
+        if (exist(symbol)) { //case symbol has binding
+            symbolToPathMap[symbol] = wishPath; //update
+        } else {
+            symbolToPathMap.insert(pair<string, string>(symbol, wishPath));
+        }
+    }
+    else {//case bind to path
+
+        if (exist(symbol)) {
+            //update
+            symbolToPathMap[symbol] = path;
+        } else {
+            symbolToPathMap.insert(pair<string, string>(symbol, path));
+        }
     }
 }
+/**
+ * get path of symbol
+ * @param symbol
+ * @return
+ */
+string SymbolsTable::getPath(string symbol) {
+    if (!exist(symbol)) {
+        throw "no symbol";
+    }
 
+    string path = (symbolToPathMap.find(symbol))->second;
+    return path;
+
+}
+/**
+ * update common values
+ * @param dataString
+ */
 void SymbolsTable::updateValues(string dataString) {
+    //lock this ctirical code
     pthread_mutex_lock(&mutex);
 
     unsigned long currentPosition = 0;
@@ -121,10 +160,15 @@ void SymbolsTable::updateValues(string dataString) {
     currentValue = stod(dataString);
     values[arrayIndex] = currentValue;
 
+    //release lock
     pthread_mutex_unlock(&mutex);
 }
-
-double SymbolsTable::getValue(string symbol) {
+/**
+ * get value of common symbol
+ * @param symbol
+ * @return
+ */
+double SymbolsTable::getCommonValue(string symbol) {
 
     if(!exist(symbol)) {
         throw "no such symbol";
@@ -132,48 +176,94 @@ double SymbolsTable::getValue(string symbol) {
 
     string path = symbolToPathMap[symbol];
 
-    //int valueIndex = (pathToValueIndexMap[path]);
+    return getValueFromPath(path);
+}
+/**
+ * check if symbol is common
+ * @param symbol
+ * @return
+ */
+bool SymbolsTable::isCommonSymbol(string symbol) {
+    if (!exist(symbol)) return false;
+    string path = getPath(symbol);
+    return (pathToValueIndexMap.count(path) != 0);
+}
 
-    //TODO: get this ugly code changed
+/**
+ * get value from common path
+ * @param path
+ * @return
+ */
+double SymbolsTable::getValueFromPath(string path) {
+
     map<string,int>::iterator iter = pathToValueIndexMap.begin();
-    bool flag = false;
-    while( !flag && iter != pathToValueIndexMap.end()) {
+    bool found = false;
+    while( !found && iter != pathToValueIndexMap.end()) {
 
         if (iter->first.compare(path)) {
-            flag = true;
+            found = true;
         } else {
             iter++;
         }
+    }
+
+    if (!found) {
+        throw "no such path";
     }
 
     int valueIndex = iter->second;
 
     double result;
 
+    //lock
     pthread_mutex_lock(&mutex);
 
+    //get
     result = values[valueIndex];
 
+    //release
     pthread_mutex_unlock(&mutex);
 
     return result;
 }
+/**
+ * check if symbol it temp symbols
+ * @param symbol
+ * @return
+ */
+bool SymbolsTable::isTempValue(string symbol) {
+    return (tempValuesMap.count(symbol) != 0) ;
+}
+/**
+ * get temp symbol value
+ * @param symbol
+ * @return
+ */
+double SymbolsTable::getTempValue(string symbol) {
 
-/*
-void SymbolsTable::setSymbol(string symbol, double value) {
-    symbolsMap[symbol] = value;
+    map<string, double >::iterator iter = tempValuesMap.find(symbol);
+    if (iter == tempValuesMap.end()) {
+        throw "no symbol";
+    }
+    return iter->second;
+}
+/**
+ * add temp symbol value, temp = unbinded
+ * @param symbol
+ * @param value
+ */
+void SymbolsTable::addTempValue(string symbol, double value) {
+    if (isTempValue(symbol)) {
+        tempValuesMap[symbol] = value;
+    } else {
+        tempValuesMap.insert(pair<string, double>(symbol, value));
+    }
 }
 
-double SymbolsTable::getValue(string symbol) {
-    return symbolsMap[symbol];
+/**
+ * release properties
+ */
+SymbolsTable::~SymbolsTable() {
+    pthread_mutex_destroy(&mutex);
+    delete instance;
 }
-
-
-void SymbolsTable::updateLocalValueByPath(string path, double value) {
-
-    std::string symbolToUpdate = pathToSymbolMap[path];
-    if (!symbolToUpdate.empty())
-        setSymbol(symbolToUpdate, value);
-
-}
-*/

@@ -6,6 +6,7 @@
 #define PACKET_SIZE 256
 #define MAX_WAITING 5
 #define ZERO 0
+#define MILISEC 1000
 
 using namespace std;
 
@@ -13,7 +14,7 @@ using namespace std;
  * create new tcp server
  * @param portNumber to listen to
  */
-Server::Server(int portNumber) {
+Server::Server(int portNumber, int timesPerSec) {
     struct sockaddr_in serv_addr = {};
 
     //AF_INET = ipv4 , SOCK_STREAM = tcp
@@ -35,8 +36,7 @@ Server::Server(int portNumber) {
         throw "ERROR on binding";
     }
     symbolsTable = SymbolsTable::getInstance();
-
-
+    this->timesPerSec = timesPerSec / MILISEC;
 }
 /**
  * start listening on given port
@@ -68,8 +68,13 @@ void Server::listen() {
         if (n < ZERO){
             return;
         }
+
+        cout << "data from simulator:" << endl;
+        cout << buffer << endl;
+
         //update values
         symbolsTable->updateValues(buffer);
+        sleep(timesPerSec);
     }
 }
 /**

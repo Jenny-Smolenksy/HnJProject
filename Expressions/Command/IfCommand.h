@@ -8,9 +8,14 @@
 
 #include "ConditionParser.h"
 
+/**
+ * If command
+ */
 class IfCommand : public ConditionParser{
+
 public:
     int execute(deque<string> act) override;
+
 
 };
 

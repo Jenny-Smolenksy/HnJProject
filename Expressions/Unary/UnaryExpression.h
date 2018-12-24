@@ -8,7 +8,9 @@
 
 #include "../Expression.h"
 
-
+/**
+ * Unary expressions
+ */
 class UnaryExpression : public Expression {
 protected:
     Expression *exp = nullptr;

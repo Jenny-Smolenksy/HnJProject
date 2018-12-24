@@ -12,8 +12,10 @@
 
 
 using namespace std;
-
-class Command{
+/**
+ * Command
+ */
+class Command {
 public:
     virtual int execute(deque<string> act) = 0;
 };

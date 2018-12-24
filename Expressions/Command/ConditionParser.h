@@ -7,21 +7,47 @@
 
 
 #include "Command.h"
+#include "../Expression.h"
 #include <list>
 
 class ConditionParser : public Command {
-    bool condition;
-    list<Command*> commands;
+protected:
+    Expression *condition;
+    vector<deque<string>> commands;
 public:
+    /**
+    * set the condition and the commands in the while scope
+    * @param act all the information
+    */
+    void setParser(deque<string> act);
+
+    /**
+     * execute
+     * @param act
+     * @return
+     */
     int execute(deque<string> act) override;
 
-    bool getCondition() {
-        return condition;
-    }
+    /**
+     * set condition
+     * @param condition
+     */
+    void setCondition(string condition);
 
-    list<Command*> getCommands() {
-        return commands;
-    }
+    /**
+     * set condition according to the operator
+     * @param r  right string
+     * @param l   left string
+     * @param op ther operator
+     */
+    void finalSet(string r, string l, string op);
+
+    /**
+     * set commands
+     * @param comandsToseperate
+     */
+    void setCommands(deque<string> comandsToseperate);
+
 
 };
 

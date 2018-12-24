@@ -1,15 +1,9 @@
-
 #include <iostream>
 #include "OpenServerCommand.h"
 #include "../../ShuntingYard.h"
 #include "../Expression.h"
 #include <pthread.h>
-#include "../../TcpSocket/Server.h"
-
-void* thread_func(void* arg) {
-
-    ((Server*)arg)->listen();
-}
+#include "../../TcpSocket/ServerStream.h"
 
 
 int OpenServerComman::execute(deque<string> act) {
@@ -21,12 +15,15 @@ int OpenServerComman::execute(deque<string> act) {
 
     try {
 
-        Server *server = new Server((int)val1);
-        //TODO: check if nedded speed params also
-        pthread_t threadId;
-        pthread_create(&threadId, nullptr, thread_func, server);
-    } catch (const char* s) { }
+        //create server
+       ServerStream* serverStream = ServerStream::getInstance();
+       serverStream->createServer((int)val1, (int)val2);
+       serverStream->listen();
 
-    cout << "need to open server " + to_string(val1) + " " + to_string(val2) << endl;
+    } catch (const char* s) {
+        cout << s << endl;
+        return -1;
+    }
+
     return 0;
 }

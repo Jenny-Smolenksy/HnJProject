@@ -15,6 +15,7 @@ using namespace std;
 class ShuntingYard {
 private:
     static ShuntingYard *instance;
+    vector<Expression*> expToDel;
 
     ShuntingYard() = default;
 
@@ -23,25 +24,80 @@ private:
 public:
     static ShuntingYard *getInstance();
 
+    /**
+     * convert string to a postfix form
+     * @param parameters
+     * @return
+     */
     deque<string> infixToPostfix(string parameters);
 
+    /**
+     * converts string to expressions
+     * @param parameters
+     * @return
+     */
     Expression *stringToExpression(string parameters);
 
-    string arangeSpaces(string parameter);
+    /**
+     * itarate a string and arrange spaces correctly
+     * @param parameter
+     * @return
+     */
+    string arrangeSpaces(string parameter);
 
-    bool exict(string c);
+    /**
+     * check id its an operaor
+     * @param c
+     * @return
+     */
+    bool exist(string c);
 
-    bool greaterPrecedence(string token,string other);
+    /**
+     * check for priority
+     * @param token
+     * @param other
+     * @return
+     */
+    bool greaterPrecedence(string token, string other);
 
+    /**
+     * check if a string is decimal
+     * @param p
+     * @return
+     */
     bool isInteger(string p);
 
-    Expression* innerExp(deque<string> *exp);
+    /**
+     * build an expression
+     * @param exp
+     * @return
+     */
+    Expression *innerExp(deque<string> *exp);
 
+    /**
+     * char to string
+     * @param c
+     * @return
+     */
     string charToString(char c);
 
-    string addOprator(string buff, char op);
+    /**
+     * add operator carefully
+     * @param buff
+     * @param op
+     * @return
+     */
+    string addOperator(string buff, char op);
 
+    /**
+     * add closing braces carefully
+     * @param buff
+     * @param b
+     * @return
+     */
     string addB(string buff, char b);
+
+    ~ShuntingYard();
 };
 
 #endif //HNJPROJECT_EXPRESSIONSCALCULATOR_H

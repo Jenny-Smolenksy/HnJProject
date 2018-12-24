@@ -14,10 +14,9 @@
 using namespace std;
 
 class Parser {
-     //TODO ONLY AFTER BUILDING EXPRESSION
     map<string, CommandExpression *> stringToCommandMap;
     static Parser *instance;
-
+    vector<CommandExpression*> expToDEL;
     Parser() = default;
 
     void setMap();
@@ -26,7 +25,23 @@ public:
     // Static access method
     static Parser *getInstance();
 
+    /**
+     *in charge of converting strings to commends and
+     * execute them
+     * @param commands  lexed file
+     */
     void runner(vector<deque<string>> commands);
+
+    /**
+     * run a single lexed command line
+     * @param command
+     */
+    void runCommand(deque<string> command);
+
+    /***
+     * erase allocated memory
+     */
+    virtual ~Parser();
 
 
 };

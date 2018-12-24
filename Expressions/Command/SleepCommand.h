@@ -8,6 +8,9 @@
 
 #include "Command.h"
 
+/**
+ * sleep command
+ */
 class SleepCommand : public Command {
 public:
     int execute(deque<string> act) override;
