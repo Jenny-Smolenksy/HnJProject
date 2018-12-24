@@ -18,6 +18,10 @@ public:
 
     virtual double calculate(deque<string> p) = 0;
 
+    virtual ~Expression() {
+
+    }
+
 };
 
 #endif //HNJPROJECT_EXPRESSION_H

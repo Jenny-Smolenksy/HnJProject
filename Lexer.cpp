@@ -6,7 +6,7 @@
 
 #include <fstream>
 #include "Lexer.h"
-#include "Utiies.h"
+#include "Utils.h"
 
 #define DIV ','
 
@@ -14,7 +14,6 @@
 Lexer *Lexer::instance = nullptr;
 
 Lexer *Lexer::getInstance() {
-    //TODO: delete instance at the end
     //singleton instance:
     if (instance == nullptr) {
         instance = new Lexer();
@@ -54,7 +53,7 @@ vector<deque<string>> Lexer::lexFromFile(string fileName) {
 deque<string> Lexer::splitCommand(string line) {
     //initial work on the string to take it to significant peaces
     line = separateLine(line);
-    return Utiies::splitBy(line, DIV);
+    return Utils::splitBy(line, DIV);
 }
 
 
@@ -68,12 +67,12 @@ string Lexer::separateLine(string line) {
     string buff;
     char space = ' ';
     for (int i = 0; i < line.size(); i++) {
-        if (line[i] == '=' && !Utiies::isBoolianOperator(line[i + 1]) &&
-            !Utiies::isBoolianOperator(buff[buff.length() - 1])) {
+        if (line[i] == '=' && !Utils::isBoolianOperator(line[i + 1]) &&
+            !Utils::isBoolianOperator(buff[buff.length() - 1])) {
             buff += DIV;
         } else if (line[i] != space) {
             buff += line[i];
-        } else if (line[i] == space && ((Utiies::isAnOperaror(line[i - 1])) || Utiies::isAnOperaror(line[i + 1]))) {
+        } else if (line[i] == space && ((Utils::isAnOperator(line[i - 1])) || Utils::isAnOperator(line[i + 1]))) {
             //space before  or after operator - skip it
             continue;
         } else if (line[i] == space && !buff.empty()) {

@@ -7,7 +7,7 @@
 #include "../../SymbolTable.h"
 #include "../../ShuntingYard.h"
 #include "../../TcpSocket/ClientStream.h"
-#include "../../Utiies.h"
+#include "../../Utils.h"
 #include <sstream>
 
 
@@ -16,9 +16,7 @@ int DefineVarCommand::execute(deque<string> act) {
 
     //case the command is to bind
     if (act[1] == "bind") {
-
-        //TODO: remove this after change in lexer!!!!!!!!!!!!!-return line **
-        string s = Utiies::removeStrStr(act[2]);
+        string s = Utils::removeStrStr(act[2]);
         symbolsTable->addSymbol(act[0], s);
 
         return 0;

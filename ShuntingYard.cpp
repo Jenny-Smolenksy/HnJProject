@@ -12,7 +12,7 @@
 #include "Expressions/Binary/Minus.h"
 #include "Expressions/Binary/Div.h"
 #include "Expressions/Unary/Neg.h"
-#include "Utiies.h"
+#include "Utils.h"
 
 #define DIV ","
 #define RIGHT_B "("
@@ -22,7 +22,6 @@
 ShuntingYard *ShuntingYard::instance = nullptr;
 
 ShuntingYard *ShuntingYard::getInstance() {
-    //TODO: delete instance at the end
     //singleton instance:
     if (instance == nullptr) {
         instance = new ShuntingYard();
@@ -38,7 +37,7 @@ ShuntingYard *ShuntingYard::getInstance() {
 
 deque<string> ShuntingYard::infixToPostfix(string parameters) {
     parameters = arrangeSpaces(parameters);
-    deque<string> splited = Utiies::splitBy(parameters, ',');
+    deque<string> splited = Utils::splitBy(parameters, ',');
     deque<string> output;
     deque<string> stack;
     string tmp;

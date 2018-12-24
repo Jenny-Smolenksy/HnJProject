@@ -10,7 +10,7 @@
 #include "../BoolianExpression/NotEql.h"
 #include "../BoolianExpression/NaryGreater.h"
 #include "../BoolianExpression/NaryLesser.h"
-#include "../../Utiies.h"
+#include "../../Utils.h"
 
 
 int ConditionParser::execute(deque<string> act) {
@@ -27,7 +27,7 @@ void ConditionParser::setCondition(string condition) {
     string op;
     bool next = false;
     for (char i : condition) {
-        if (Utiies::isBoolianOperator(i)) {
+        if (Utils::isBoolianOperator(i)) {
             //build operator/move on to next string
             next = true;
             op += i;
@@ -124,5 +124,3 @@ void ConditionParser::setParser(deque<string> act) {
 
 
 
-
-//TODO HANDLE CONDITION AND COMMAND
