@@ -2,6 +2,7 @@
 // Created by Jenny && Hilla
 //
 
+#include <iostream>
 #include "Parser.h"
 
 #include "Expressions/Command/ConnectCommand.h"
@@ -62,6 +63,8 @@ void Parser::runner(vector<deque<string>> commands) {
             break;
         }
         runCommand(command_line);
+
+
     }
 }
 

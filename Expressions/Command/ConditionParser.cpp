@@ -11,6 +11,7 @@
 #include "../BoolianExpression/NaryGreater.h"
 #include "../BoolianExpression/NaryLesser.h"
 #include "../../Utils.h"
+#include "../../Lexer.h"
 
 
 int ConditionParser::execute(deque<string> act) {
@@ -85,6 +86,12 @@ void ConditionParser::setCommands(deque<string> commandsToseperate) {
     while (!commandsToseperate.empty()) {
         deque<string> command;
         while (!commandsToseperate.empty() && commandsToseperate.front() != "DIVIDER") {
+            if(commandsToseperate.front()=="if"||commandsToseperate.front()=="while"){
+                command.push_back(commandsToseperate.front());
+                commandsToseperate.pop_front();
+                getScope(&commandsToseperate,&command);
+                continue;
+            }
             //read a single command
             command.push_back(commandsToseperate.front());
             commandsToseperate.pop_front();
@@ -105,6 +112,8 @@ void ConditionParser::setCommands(deque<string> commandsToseperate) {
 * @param act all the information
  */
 void ConditionParser::setParser(deque<string> act) {
+    condition= nullptr;
+    commands.clear();
     string conditionHolder;
     while (act.front() != "{") {
         //the condition is written until the scope starts
@@ -119,6 +128,30 @@ void ConditionParser::setParser(deque<string> act) {
     //set commands
     setCommands(act);
 
+}
+
+void ConditionParser::getScope(deque<string> *lines, deque<string> *scopeCommand) {
+    //while we didnt reach the end of the scope
+    while (lines->front() != "}") {
+        string commandPart=lines->front();
+        if (commandPart == "while" || commandPart == "if") {
+            lines->pop_front();
+            scopeCommand->push_back(commandPart);
+            //a scope with in a scope
+            getScope(lines, scopeCommand);
+            continue;
+
+        }
+        scopeCommand->push_back(commandPart);
+        //remove this line
+        lines->pop_front();
+        if (lines->empty()) {
+            //ended file without closing scope
+            throw "ERROR! missing closing } to end the scope";
+        }
+    }
+    scopeCommand->push_back(lines->front());
+    lines->pop_front();
 }
 
 

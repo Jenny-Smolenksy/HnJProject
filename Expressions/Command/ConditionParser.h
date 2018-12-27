@@ -48,6 +48,8 @@ public:
      */
     void setCommands(deque<string> commandsToseperate);
 
+    void getScope(deque<string> *lines, deque<string> *scopeCommand);
+
 
 };
 

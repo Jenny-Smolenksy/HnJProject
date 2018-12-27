@@ -152,7 +152,12 @@ Expression *ShuntingYard::innerExp(deque<string> *exp) {
 }
 
 bool ShuntingYard::isInteger(string p) {
-    return p[0] <= '9' && p[0] >= 0;
+    for(char i:p){
+        if(!isdigit(i)){
+            return false;
+        }
+    }
+    return true;
 }
 
 string ShuntingYard::charToString(char c) {

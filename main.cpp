@@ -75,9 +75,16 @@ void runFromFile(string fileName) {
     vector<deque<string>> res;
     res = lex->lexFromFile(std::move(fileName));
     Parser *p = Parser::getInstance();
-    p->runner(res);
+    try {
+        p->runner(res);
 
-    while(true) {}
+    } catch (const char *s) {
+        cout << s << endl;
+
+    }
+
+
+   // while(true) {}
 }
 
 
