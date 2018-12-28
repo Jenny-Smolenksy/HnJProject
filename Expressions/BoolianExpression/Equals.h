@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_EQUALS_H
 #define HNJPROJECT_EQUALS_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /**
  * Equals
  */
-class Equals : public BoolianExpression {
+class Equals : public BooleanExpression {
 public:
     double calculate() override;
 

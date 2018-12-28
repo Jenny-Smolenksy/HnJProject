@@ -5,6 +5,9 @@
 #include "Neg.h"
 
 double Neg::calculate() {
+    if (exp->calculate() == 0) {
+        return 0;
+    }
     return -exp->calculate();
 }
 

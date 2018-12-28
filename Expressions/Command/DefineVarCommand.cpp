@@ -7,13 +7,16 @@
 #include "../../SymbolTable.h"
 #include "../../ShuntingYard.h"
 #include "../../TcpSocket/ClientStream.h"
-#include "../../Utiies.h"
+#include "../../Utils.h"
 #include <sstream>
 
 
 int DefineVarCommand::execute(deque<string> act) {
     SymbolsTable *symbolsTable = SymbolsTable::getInstance();
 
+    if (!validName(act[0])) {
+        throw "not a valid name";
+    }
     //case the command is to bind
     if (act[1] == "bind") {
 
@@ -25,7 +28,7 @@ int DefineVarCommand::execute(deque<string> act) {
             if (secondParam[0] != '"' || secondParam[secondParam.length()-1] != '"') {
                 throw "cannot bind to unknown value";
             }
-            secondParam = Utiies::removeStrStr(act[2]);
+            secondParam = Utils::removeStrStr(act[2]);
         }
 
         symbolsTable->addSymbol(act[0], secondParam);
@@ -40,9 +43,15 @@ int DefineVarCommand::execute(deque<string> act) {
 
     //if binded value
     if (symbolsTable->exist(act[0])) {
+        try {
             //get path and set new value via client
             string path = symbolsTable->getPath(act[0]);
             setValue(path, val);
+
+        } catch (const char* message) {
+            cout << message << endl;
+            return  -1;
+        }
         return 0;
     }
     //temp value

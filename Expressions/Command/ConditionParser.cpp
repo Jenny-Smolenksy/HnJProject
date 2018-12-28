@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #include <unordered_set>
@@ -10,7 +10,8 @@
 #include "../BoolianExpression/NotEql.h"
 #include "../BoolianExpression/NaryGreater.h"
 #include "../BoolianExpression/NaryLesser.h"
-#include "../../Utiies.h"
+#include "../../Utils.h"
+#include "../../Lexer.h"
 
 
 int ConditionParser::execute(deque<string> act) {
@@ -27,7 +28,7 @@ void ConditionParser::setCondition(string condition) {
     string op;
     bool next = false;
     for (char i : condition) {
-        if (Utiies::isBoolianOperator(i)) {
+        if (Utils::isBooleanOperator(i)) {
             //build operator/move on to next string
             next = true;
             op += i;
@@ -50,7 +51,7 @@ void ConditionParser::setCondition(string condition) {
 * set condition according to the operator
 * @param r  right string
 * @param l   left string
-* @param op ther operator
+* @param op the operator
  */
 void ConditionParser::finalSet(string r, string l, string op) {
     if (op == "==") {
@@ -79,18 +80,24 @@ void ConditionParser::finalSet(string r, string l, string op) {
 
 /**
  * set commands
- * @param comandsToseperate
+ * @param commandsToseperate
  */
-void ConditionParser::setCommands(deque<string> comandsToseperate) {
-    while (!comandsToseperate.empty()) {
+void ConditionParser::setCommands(deque<string> commandsToseperate) {
+    while (!commandsToseperate.empty()) {
         deque<string> command;
-        while (!comandsToseperate.empty() && comandsToseperate.front() != "DIVIDER") {
+        while (!commandsToseperate.empty() && commandsToseperate.front() != "DIVIDER") {
+            if(commandsToseperate.front()=="if"||commandsToseperate.front()=="while"){
+                command.push_back(commandsToseperate.front());
+                commandsToseperate.pop_front();
+                getScope(&commandsToseperate,&command);
+                continue;
+            }
             //read a single command
-            command.push_back(comandsToseperate.front());
-            comandsToseperate.pop_front();
+            command.push_back(commandsToseperate.front());
+            commandsToseperate.pop_front();
         }
-        if (!comandsToseperate.empty()) {
-            comandsToseperate.pop_front();
+        if (!commandsToseperate.empty()) {
+            commandsToseperate.pop_front();
         }
         //insert it to our set of comandsToseperate
         this->commands.push_back(command);
@@ -105,6 +112,8 @@ void ConditionParser::setCommands(deque<string> comandsToseperate) {
 * @param act all the information
  */
 void ConditionParser::setParser(deque<string> act) {
+    condition= nullptr;
+    commands.clear();
     string conditionHolder;
     while (act.front() != "{") {
         //the condition is written until the scope starts
@@ -121,8 +130,30 @@ void ConditionParser::setParser(deque<string> act) {
 
 }
 
+void ConditionParser::getScope(deque<string> *lines, deque<string> *scopeCommand) {
+    //while we didnt reach the end of the scope
+    while (lines->front() != "}") {
+        string commandPart=lines->front();
+        if (commandPart == "while" || commandPart == "if") {
+            lines->pop_front();
+            scopeCommand->push_back(commandPart);
+            //a scope with in a scope
+            getScope(lines, scopeCommand);
+            continue;
+
+        }
+        scopeCommand->push_back(commandPart);
+        //remove this line
+        lines->pop_front();
+        if (lines->empty()) {
+            //ended file without closing scope
+            throw "ERROR! missing closing } to end the scope";
+        }
+    }
+    scopeCommand->push_back(lines->front());
+    lines->pop_front();
+}
 
 
 
 
-//TODO HANDLE CONDITION AND COMMAND

@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/20/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_DIV_H

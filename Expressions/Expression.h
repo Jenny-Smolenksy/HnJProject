@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/19/18.
+// Created by Jenny && Hilla
 //
 #include <string>
 #include <vector>
@@ -17,6 +17,8 @@ public:
     virtual double calculate() = 0;
 
     virtual double calculate(deque<string> p) = 0;
+
+    virtual ~Expression() = default;
 
 };
 

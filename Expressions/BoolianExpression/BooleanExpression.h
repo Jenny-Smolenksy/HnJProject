@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_BOOLIANEXPRESSION_H
@@ -9,14 +9,14 @@
 #include "../Expression.h"
 
 /**
- * simple bollianExpression class to deal with boolian Expressions
+ * simple boolean Expression class to deal with boolian Expressions
  */
-class BoolianExpression : public Expression {
+class BooleanExpression : public Expression {
 protected:
     Expression *right = nullptr;
     Expression *left = nullptr;
 public:
-    explicit BoolianExpression(string r, string l);
+    explicit BooleanExpression(string r, string l);
 
     double calculate() override;
 

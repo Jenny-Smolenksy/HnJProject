@@ -1,9 +1,9 @@
 #include <string>
 #include <iostream>
 #include <unistd.h>
-#include <stdio.h>
+#include <cstdio>
 #include <sys/socket.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -18,7 +18,8 @@ class Client {
 
 public:
 
-    Client() { }
+    Client() = default;
+
     void connectToServer(string serverAddress, int portNumber);
     void sendMessage(string message);
     string sendMessageWithFeedback(string message);

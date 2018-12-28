@@ -1,8 +1,9 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #include "Equals.h"
+#include <utility>
 
 double Equals::calculate() {
     if (right->calculate() == left->calculate()) {
@@ -11,6 +12,6 @@ double Equals::calculate() {
     return 0;
 }
 
-Equals::Equals(string r, string l) : BoolianExpression(r, l) {
+Equals::Equals(string r, string l) : BooleanExpression(std::move(r), std::move(l)) {
 
 }

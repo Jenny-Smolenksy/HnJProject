@@ -5,7 +5,6 @@
 #include "ShuntingYard.h"
 #include "Parser.h"
 #include "TcpSocket/ClientStream.h"
-#include "TcpSocket/ServerStream.h"
 
 using namespace std;
 
@@ -42,18 +41,20 @@ deque<string> getScope() {
     return lines;
 }
 
+
+
 /**
  * read from CMd
  */
 void runFromCommandLine() {
     string line;
+    Lexer *lex = Lexer::getInstance();
+    Parser *p = Parser::getInstance();
     while (true) {
         getline(cin, line);
         if (line == "exit") {
-            pthread_exit(nullptr);
+            break;
         }
-        Lexer *lex = Lexer::getInstance();
-        Parser *p = Parser::getInstance();
         deque<string> command = lex->splitCommand(line);
         if (command[0] == "while" || command[0] == "if") {
             //read a scope and them execute it
@@ -74,21 +75,18 @@ void runFromFile(string fileName) {
     vector<deque<string>> res;
     res = lex->lexFromFile(std::move(fileName));
     Parser *p = Parser::getInstance();
-    p->runner(res);
+    try {
+        p->runner(res);
 
-    string line = "exit";
-    while (true) {
-        //getline(cin, line);
-        if (line == "exit") {
-          //  ClientStream* clientStream = ClientStream::getInstance();
-          //  delete(clientStream);
-            ServerStream* serverStream = ServerStream::getInstance();
-            delete(serverStream);
-            //pthread_exit(nullptr);
-        }
+    } catch (const char *s) {
+        cout << s << endl;
+
     }
 
+
+   // while(true) {}
 }
+
 
 int main(int arg, char *argv[]) {
 

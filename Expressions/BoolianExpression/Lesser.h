@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_LESSER_H
 #define HNJPROJECT_LESSER_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /**
  * Lesser
  */
-class Lesser : public BoolianExpression {
+class Lesser : public BooleanExpression {
 public:
     double calculate() override;
 

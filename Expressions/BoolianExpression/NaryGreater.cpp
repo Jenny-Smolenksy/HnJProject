@@ -1,10 +1,11 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #include "NaryGreater.h"
+#include <utility>
 
-NaryGreater::NaryGreater(string r, string l) : BoolianExpression(r, l) {
+NaryGreater::NaryGreater(string r, string l) : BooleanExpression(std::move(r), std::move(l)) {
 
 }
 

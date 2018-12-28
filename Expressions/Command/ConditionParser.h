@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_CONDITIONPARSER_H
@@ -44,9 +44,11 @@ public:
 
     /**
      * set commands
-     * @param comandsToseperate
+     * @param commandsToseperate
      */
-    void setCommands(deque<string> comandsToseperate);
+    void setCommands(deque<string> commandsToseperate);
+
+    void getScope(deque<string> *lines, deque<string> *scopeCommand);
 
 
 };

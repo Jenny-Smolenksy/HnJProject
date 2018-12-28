@@ -1,12 +1,12 @@
 #include <utility>
 
 //
-// Created by hilla on 12/19/18.
+// Created by Jenny && Hilla
 //
 
 #include <fstream>
 #include "Lexer.h"
-#include "Utiies.h"
+#include "Utils.h"
 
 #define DIV ','
 
@@ -14,7 +14,6 @@
 Lexer *Lexer::instance = nullptr;
 
 Lexer *Lexer::getInstance() {
-    //TODO: delete instance at the end
     //singleton instance:
     if (instance == nullptr) {
         instance = new Lexer();
@@ -35,7 +34,7 @@ vector<deque<string>> Lexer::lexFromFile(string fileName) {
     while (!lines.empty()) {
         //each line into a splited command
         command = splitCommand(lines.front());
-        if (command[0] == "while") {
+        if (command[0] == "while" || command[0] == "if") {
             //gets scope
             lines.pop_front();
             getScope(&lines, &command);
@@ -54,7 +53,7 @@ vector<deque<string>> Lexer::lexFromFile(string fileName) {
 deque<string> Lexer::splitCommand(string line) {
     //initial work on the string to take it to significant peaces
     line = separateLine(line);
-    return Utiies::splitBy(line, DIV);
+    return Utils::splitBy(line, DIV);
 }
 
 
@@ -68,15 +67,15 @@ string Lexer::separateLine(string line) {
     string buff;
     char space = ' ';
     for (int i = 0; i < line.size(); i++) {
-        if (line[i] == '=' && !Utiies::isBoolianOperator(line[i + 1]) &&
-            !Utiies::isBoolianOperator(buff[buff.length() - 1])) {
+        if (line[i] == '=' && !Utils::isBooleanOperator(line[i + 1]) &&
+            !Utils::isBooleanOperator(buff[buff.length() - 1])) {
             buff += DIV;
-        } else if (line[i] != space) {
+        } else if (line[i] != space && line[i]!=',') {
             buff += line[i];
-        } else if (line[i] == space && ((Utiies::isAnOperaror(line[i - 1])) || Utiies::isAnOperaror(line[i + 1]))) {
+        } else if ((line[i] == space ||line[i]==',')&& ((Utils::isAnOperator(line[i - 1])) || Utils::isAnOperator(line[i + 1]))) {
             //space before  or after operator - skip it
             continue;
-        } else if (line[i] == space && !buff.empty()) {
+        } else if ((line[i] == space ||line[i]==',') && !buff.empty()) {
             buff += DIV;
         }
 
@@ -101,10 +100,12 @@ deque<string> Lexer::getLines(string fileName) {
             if (line.empty()) {
                 continue;
             }
-            if (line[line.length()] == '}') {
+            if (line.length() > 1 && line[line.length() - 1] == '}') {
                 //makes sure closing scope brace will only be in a new line
                 line.erase(line.length() - 1, line.length());
+                result.push_back(line);
                 result.emplace_back("}");
+                continue;
             }
             result.push_back(line);
 
@@ -134,7 +135,8 @@ void Lexer::getScope(deque<string> *lines, deque<string> *scopeCommand) {
         if (singleCommand[0] == "while" || singleCommand[0] == "if") {
             lines->pop_front();
             //a scope with in a scope
-            getScope(lines, scopeCommand);
+            getScope(lines, &singleCommand);
+
 
         }
         //each scopeCommand part insert to the scope scopeCommand
@@ -149,6 +151,7 @@ void Lexer::getScope(deque<string> *lines, deque<string> *scopeCommand) {
             throw "ERROR! missing closing } to end the scope";
         }
     }
+    scopeCommand->push_back("}");
 
 
 }

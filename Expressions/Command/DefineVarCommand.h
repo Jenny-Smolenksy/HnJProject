@@ -1,5 +1,5 @@
 //
-// Created by hilla on 12/18/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_DEDINEVARCOMMAND_H
@@ -10,9 +10,13 @@
 
 class DefineVarCommand : public Command {
 public:
-    virtual int execute(deque<string> act);
+    int execute(deque<string> act) override;
 
     int setValue(string symbol, double value);
+
+    bool validName(string name);
+
+    bool isSaveWord(string name);
 
 };
 

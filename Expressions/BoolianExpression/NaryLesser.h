@@ -1,17 +1,17 @@
 //
-// Created by hilla on 12/22/18.
+// Created by Jenny && Hilla
 //
 
 #ifndef HNJPROJECT_NARYLESSER_H
 #define HNJPROJECT_NARYLESSER_H
 
 
-#include "BoolianExpression.h"
+#include "BooleanExpression.h"
 
 /**
  * Lesser or eqaul
  */
-class NaryLesser : public BoolianExpression {
+class NaryLesser : public BooleanExpression {
 public:
     double calculate() override;
 
