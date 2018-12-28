@@ -8,7 +8,7 @@
 #include "../../ShuntingYard.h"
 
 int PrintCommand::execute(deque<string> act) {
-    cout << "print" << endl;
+    //cout << "print" << endl;
     if (act[0].at(0) == '"') {
         //simple print
         string stringHolder;

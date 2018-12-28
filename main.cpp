@@ -24,9 +24,6 @@ deque<string> getScope() {
             inner = true;
         }
         if (line[line.length() - 1] == '}') {
-            //makes sure closing scope brace will only be in a new line
-            line.erase(line.length() - 1, line.length());
-            lines.emplace_back("}");
             if (inner) {
                 //finish reading inner scope
                 inner = false;
@@ -34,6 +31,11 @@ deque<string> getScope() {
                 lines.push_back(line);
                 break;
             }
+            //makes sure closing scope brace will only be in a new line
+            line.erase(line.length() - 1, line.length());
+            lines.emplace_back("}");
+            continue;
+
         }
         lines.push_back(line);
 
@@ -61,7 +63,14 @@ void runFromCommandLine() {
             deque<string> scope = getScope();
             lex->getScope(&scope, &command);
         }
-        p->runCommand(command);
+        try {
+            p->runCommand(command);
+
+        } catch (const char *s) {
+            cout << s << endl;
+
+        }
+
     }
 }
 
@@ -91,7 +100,7 @@ void runFromFile(string fileName) {
 int main(int arg, char *argv[]) {
 
     vector<deque<string>> res;
-    if (arg == 2) {
+    if (arg != 2) {
         runFromFile(argv[1]);
     } else {
         runFromCommandLine();
