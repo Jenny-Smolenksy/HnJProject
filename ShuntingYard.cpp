@@ -78,7 +78,7 @@ deque<string> ShuntingYard::infixToPostfix(string parameters) {
 }
 
 Expression *ShuntingYard::stringToExpression(string parameters) {
-    deque<string> postfix = infixToPostfix(std::move(parameters));
+    deque<string> postfix = infixToPostfix(parameters);
     if (!postfix.empty()) {
         return innerExp(&postfix);
     }
@@ -152,8 +152,8 @@ Expression *ShuntingYard::innerExp(deque<string> *exp) {
 }
 
 bool ShuntingYard::isInteger(string p) {
-    for(char i:p){
-        if(!isdigit(i)){
+    for (char i:p) {
+        if (!isdigit(i) && i != '.') {
             return false;
         }
     }
