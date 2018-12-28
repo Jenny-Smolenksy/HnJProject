@@ -17,9 +17,18 @@ int DefineVarCommand::execute(deque<string> act) {
     //case the command is to bind
     if (act[1] == "bind") {
 
-        //TODO: remove this after change in lexer!!!!!!!!!!!!!-return line **
-        string s = Utiies::removeStrStr(act[2]);
-        symbolsTable->addSymbol(act[0], s);
+
+        string secondParam = act[2];
+
+        if (!symbolsTable->exist(secondParam)) {
+            //check if in quotes
+            if (secondParam[0] != '"' || secondParam[secondParam.length()-1] != '"') {
+                throw "cannot bind to unknown value";
+            }
+            secondParam = Utiies::removeStrStr(act[2]);
+        }
+
+        symbolsTable->addSymbol(act[0], secondParam);
 
         return 0;
     }
@@ -31,15 +40,9 @@ int DefineVarCommand::execute(deque<string> act) {
 
     //if binded value
     if (symbolsTable->exist(act[0])) {
-        try {
             //get path and set new value via client
             string path = symbolsTable->getPath(act[0]);
             setValue(path, val);
-
-        } catch (const char* message) {
-            cout << message << endl;
-            return  -1;
-        }
         return 0;
     }
     //temp value

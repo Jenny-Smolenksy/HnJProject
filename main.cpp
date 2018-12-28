@@ -5,6 +5,7 @@
 #include "ShuntingYard.h"
 #include "Parser.h"
 #include "TcpSocket/ClientStream.h"
+#include "TcpSocket/ServerStream.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ void runFromCommandLine() {
     while (true) {
         getline(cin, line);
         if (line == "exit") {
-            break;
+            pthread_exit(nullptr);
         }
         Lexer *lex = Lexer::getInstance();
         Parser *p = Parser::getInstance();
@@ -74,6 +75,18 @@ void runFromFile(string fileName) {
     res = lex->lexFromFile(std::move(fileName));
     Parser *p = Parser::getInstance();
     p->runner(res);
+
+    string line = "exit";
+    while (true) {
+        //getline(cin, line);
+        if (line == "exit") {
+          //  ClientStream* clientStream = ClientStream::getInstance();
+          //  delete(clientStream);
+            ServerStream* serverStream = ServerStream::getInstance();
+            delete(serverStream);
+            //pthread_exit(nullptr);
+        }
+    }
 
 }
 

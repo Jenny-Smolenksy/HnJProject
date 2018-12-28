@@ -18,13 +18,14 @@ int PrintCommand::execute(deque<string> act) {
         }
         cout << stringHolder << endl;
     }  else {
-        //its an expression
-        ShuntingYard *shuntingYard = ShuntingYard::getInstance();
-        Expression *x = shuntingYard->stringToExpression(act[0]);
-        //calculate it
-        double val = x->calculate();
-        //print it
-        cout << to_string(val) << endl;
-    }
+            //its an expression
+            ShuntingYard *shuntingYard = ShuntingYard::getInstance();
+            Expression *x = shuntingYard->stringToExpression(act[0]);
+            //calculate it
+            double val = x->calculate();
+            //print it
+            cout << to_string(val) << endl;
+        }
+
     return 0;
 }
