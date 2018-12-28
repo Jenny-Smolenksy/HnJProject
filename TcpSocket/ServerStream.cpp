@@ -45,6 +45,17 @@ void* threadFuncListen(void* arg) {
 }
 
 /**
+ * thread function for server listen
+ * @param arg
+ * @return
+ */
+void* threadFuncStopListen(void* arg) {
+
+    PARAMS* params = (PARAMS*)arg;
+    params->server->stopListen();
+}
+
+/**
  * create server with given params
  * @param port
  * @param readSpeed
@@ -76,6 +87,11 @@ void ServerStream::startListen() {
  */
 ServerStream::~ServerStream() {
     //kill or close server if needed
+
+    pthread_t pthreadId;
+    PARAMS* params = new PARAMS{server, 0};
+
+ //   pthread_create(&pthreadId, nullptr, threadFuncWaitForConnection, params);
     delete server;
 }
 

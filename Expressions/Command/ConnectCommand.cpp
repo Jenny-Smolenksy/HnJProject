@@ -10,16 +10,17 @@
 
 int ConnectCommand::execute(deque<string> act) {
 
-    ShuntingYard *shuntingYard = ShuntingYard::getInstance();
+        ShuntingYard *shuntingYard = ShuntingYard::getInstance();
 
-    string serverAddress = act[0];
-    Expression *y = shuntingYard->stringToExpression(act[1]);
-    double val2 = y->calculate();
+        string serverAddress = act[0];
+        Expression *y = shuntingYard->stringToExpression(act[1]);
+        double val2 = y->calculate();
 
-    ClientStream* clientStream = ClientStream::getInstance();
+        ClientStream *clientStream = ClientStream::getInstance();
 
-    //create client with given params
-    clientStream->connect(serverAddress, (int)val2);
+        //create client with given params
+        clientStream->connect(serverAddress, (int) val2);
+
 
     return 0;
 }

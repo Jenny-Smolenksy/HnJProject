@@ -37,6 +37,7 @@ Server::Server(int portNumber, int timesPerSec) {
     }
     symbolsTable = SymbolsTable::getInstance();
     this->timesPerSec = timesPerSec / MILISEC;
+    this->running = false;
 }
 /**
  * server waiting for connection, stop when a client enters
@@ -67,6 +68,7 @@ int Server::waitForConnection() {
         return -1;
     }
 
+    this->running = true;
     cout << "first data from simulator: (only first will be printed)" << endl;
     cout << buffer << endl;
 
@@ -89,14 +91,15 @@ void Server::listen(int currentSocketFd) {
     }
 
     /* If connection is established then start communicating */
-    while(true) {
+    while(running) {
         bzero(buffer, PACKET_SIZE);
         //read bytes
         n = (int)read(currentSocketFd, buffer, (PACKET_SIZE - sizeof(char)));
 
         //empty packet - lost connection
         if (n < ZERO){
-            return;
+            running = false;
+            //pthread_exit(nullptr);
         }
 
        // cout << "data from simulator:" << endl;
@@ -106,6 +109,10 @@ void Server::listen(int currentSocketFd) {
         symbolsTable->updateValues(buffer);
         sleep(timesPerSec);
     }
+}
+
+void Server::stopListen() {
+    running = false;
 }
 /**
  * destructor for server

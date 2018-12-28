@@ -51,7 +51,8 @@ void Client::sendMessage(string message) {
 
     //Send message to the server
     //int resultCode = (int)write(sockfd, message.c_str(), message.length());
-    int resultCode = (int)send(sockfd, message.c_str(), message.length(), 0);
+    int resultCode;
+    resultCode = (int)send(sockfd, message.c_str(), message.length(), 0);
 
     cout << "send message to server: " ;
     cout << message << endl;
@@ -74,7 +75,10 @@ string Client::sendMessageWithFeedback(string message) {
 
     //Send message to the server
    // int resultCode = (int)write(sockfd, message.c_str(), message.length());
-    int resultCode = (int)send(sockfd, message.c_str(), message.length(), 0);
+
+   int resultCode;
+   resultCode = (int)send(sockfd, message.c_str(), message.length(), 0);
+
 
     //check message sent
     if (resultCode < ZERO) {

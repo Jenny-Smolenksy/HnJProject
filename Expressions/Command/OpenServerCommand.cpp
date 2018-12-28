@@ -13,17 +13,10 @@ int OpenServerComman::execute(deque<string> act) {
     double val1 = x->calculate();
     double val2 = y->calculate();
 
-    try {
-
-        //create server
-       ServerStream* serverStream = ServerStream::getInstance();
-       serverStream->createServer((int)val1, (int)val2);
-       serverStream->startListen();
-
-    } catch (const char* s) {
-        cout << s << endl;
-        return -1;
-    }
+    //create server
+   ServerStream* serverStream = ServerStream::getInstance();
+   serverStream->createServer((int)val1, (int)val2);
+   serverStream->startListen();
 
     return 0;
 }

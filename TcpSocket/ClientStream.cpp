@@ -134,7 +134,7 @@ string ClientStream::sendFeedbackMessage(string message) {
  * close all
  */
 ClientStream::~ClientStream() {
-    delete this->client;
+    delete client;
 }
 /**
  * create message in get format
@@ -203,6 +203,7 @@ double ClientStream::getValueFromMessage(string message, string path) {
     currentValue = stod(message);
     return currentValue;
 }
+
 
 
 
