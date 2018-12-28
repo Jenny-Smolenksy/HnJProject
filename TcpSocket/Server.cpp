@@ -107,7 +107,7 @@ void Server::listen(int currentSocketFd) {
 
         //update values
         symbolsTable->updateValues(buffer);
-        sleep(timesPerSec);
+        sleep((unsigned int)timesPerSec);
     }
 }
 

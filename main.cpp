@@ -84,7 +84,7 @@ void runFromFile(string fileName) {
     }
 
 
-   // while(true) {}
+    while(true) {}
 }
 
 

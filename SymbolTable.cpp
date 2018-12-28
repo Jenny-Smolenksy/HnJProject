@@ -148,8 +148,10 @@ void SymbolsTable::updateValues(string dataString) {
 
         //get string until separator
         current = dataString.substr(currentPosition, endPosition);
-        //convert to double value
-        currentValue = stod(current);
+        try {
+            //convert to double value
+            currentValue = stod(current);
+        } catch(char * s) {cout << current << endl;}
         //put in values array
         values[arrayIndex++] = currentValue;
 

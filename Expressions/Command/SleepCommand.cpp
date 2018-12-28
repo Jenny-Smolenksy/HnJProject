@@ -8,6 +8,7 @@
 #include "../../ShuntingYard.h"
 #include "../../SymbolTable.h"
 #include <pthread.h>
+#define MILISEC 1000
 
 #include <unistd.h>
 
@@ -16,8 +17,9 @@ int SleepCommand::execute(deque<string> act) {
     Expression *x = shuntingYard->stringToExpression(act[0]);
     double val = x->calculate();
     cout << "sleep for " +  to_string(val) << endl;
-    sleep(static_cast<unsigned int>((int)val));
-
+    unsigned int sleepTime = static_cast<unsigned int>((int)val);
+    sleepTime /= MILISEC;
+    sleep(sleepTime);
 
     return 0;
 }

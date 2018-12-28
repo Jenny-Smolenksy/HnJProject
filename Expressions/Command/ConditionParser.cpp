@@ -28,6 +28,8 @@ void ConditionParser::setCondition(string condition) {
     string op;
     bool next = false;
     for (char i : condition) {
+
+        
         if (Utils::isBooleanOperator(i)) {
             //build operator/move on to next string
             next = true;

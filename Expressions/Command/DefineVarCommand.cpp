@@ -1,7 +1,5 @@
-#include <utility>
-
 //
-// Created by Jenny && Hilla !
+// Created by hilla on 12/18/18.
 //
 
 #include <iostream>
@@ -12,16 +10,28 @@
 #include "../../Utils.h"
 #include <sstream>
 
+
 int DefineVarCommand::execute(deque<string> act) {
+    SymbolsTable *symbolsTable = SymbolsTable::getInstance();
+
     if (!validName(act[0])) {
         throw "not a valid name";
     }
-    SymbolsTable *symbolsTable = SymbolsTable::getInstance();
-
     //case the command is to bind
     if (act[1] == "bind") {
-        string s = Utils::removeStrStr(act[2]);
-        symbolsTable->addSymbol(act[0], s);
+
+
+        string secondParam = act[2];
+
+        if (!symbolsTable->exist(secondParam)) {
+            //check if in quotes
+            if (secondParam[0] != '"' || secondParam[secondParam.length()-1] != '"') {
+                throw "cannot bind to unknown value";
+            }
+            secondParam = Utils::removeStrStr(act[2]);
+        }
+
+        symbolsTable->addSymbol(act[0], secondParam);
 
         return 0;
     }
@@ -38,9 +48,9 @@ int DefineVarCommand::execute(deque<string> act) {
             string path = symbolsTable->getPath(act[0]);
             setValue(path, val);
 
-        } catch (const char *message) {
+        } catch (const char* message) {
             cout << message << endl;
-            return -1;
+            return  -1;
         }
         return 0;
     }
@@ -63,15 +73,16 @@ int DefineVarCommand::setValue(string path, double value) {
     strs << value;
     string valueStr = strs.str();
 
-    ClientStream *clientStream = ClientStream::getInstance();
+    ClientStream* clientStream = ClientStream::getInstance();
 
     //create message
-    string message = clientStream->messageFormatSet(std::move(path), valueStr);
+    string message = clientStream->messageFormatSet(path, valueStr);
 
     //send message
     clientStream->sendMessage(message);
 
 }
+
 
 bool DefineVarCommand::validName(string name) {
     if (isSaveWord(name)) {
@@ -95,4 +106,3 @@ bool DefineVarCommand::isSaveWord(string name) {
     return (name == "if" || name == "var" || name == "while" || name == "print" || name == "sleep" ||
             name == "connect" || name == "exit" || name == "openDataServer");
 }
-

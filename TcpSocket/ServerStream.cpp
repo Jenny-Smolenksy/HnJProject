@@ -70,7 +70,7 @@ void ServerStream::createServer(int port, int readSpeed) {
 void ServerStream::startListen() {
 
     pthread_t threadIdWait;
-    int sockId;
+    int sockId = 0;
     PARAMS* params = new PARAMS{server, sockId};
     void* result;
 
