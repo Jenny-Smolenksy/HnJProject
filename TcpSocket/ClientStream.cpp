@@ -73,14 +73,9 @@ int ClientStream::connect(string message, int port) {
 
     auto * params = new CONNECT_PARAMS{client, message, port};
     pthread_t threadId;
-    try {
-        pthread_create(&threadId, nullptr, threadConnectFunc, params);
-        pthread_join(threadId, nullptr);
-        cout << "client is connected" << endl;
-    } catch (const char * s) {
-        cout << s << endl;
-        return -1;
-    }
+    pthread_create(&threadId, nullptr, threadConnectFunc, params);
+    pthread_join(threadId, nullptr);
+    //cout << "client is connected" << endl;
     return 0;
 }
 /**

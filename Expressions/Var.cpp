@@ -43,7 +43,6 @@ double Var::calculate() {
         //send message
         string result = clientStream->sendFeedbackMessage(message);
 
-        cout << "message from server: "; cout << result << endl;
         //get value from message
         double value = clientStream->getValueFromMessage(result, path);
         return value;

@@ -5,8 +5,16 @@
 #include "ShuntingYard.h"
 #include "Parser.h"
 #include "TcpSocket/ClientStream.h"
+#include "TcpSocket/ServerStream.h"
 
 using namespace std;
+
+
+void safeClose() {
+    ServerStream* serverStream = ServerStream::getInstance();
+    delete(serverStream);
+}
+
 
 /**
  * get a while scope from the user
@@ -69,6 +77,8 @@ void runFromCommandLine() {
         } catch (const char *s) {
             cout << s << endl;
 
+        } catch (invalid_argument& e) {
+            cout << "invalid argument" << endl;
         }
 
     }
@@ -79,7 +89,6 @@ void runFromCommandLine() {
  * @param fileName
  */
 void runFromFile(string fileName) {
-
     Lexer *lex = Lexer::getInstance();
     vector<deque<string>> res;
     res = lex->lexFromFile(std::move(fileName));
@@ -87,23 +96,22 @@ void runFromFile(string fileName) {
     try {
         p->runner(res);
 
-    } catch (const char *s) {
+    } catch (char const *s) {
         cout << s << endl;
-
+    } catch (invalid_argument& e) {
+        cout << "invalid argument" << endl;
     }
-
-
-    while(true) {}
 }
 
 
 int main(int arg, char *argv[]) {
 
     vector<deque<string>> res;
-    if (arg != 2) {
+    if (arg == 2) {
         runFromFile(argv[1]);
     } else {
         runFromCommandLine();
     }
+    safeClose();
     return 0;
 }

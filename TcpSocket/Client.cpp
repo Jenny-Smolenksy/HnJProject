@@ -3,7 +3,7 @@
 #include "Client.h"
 
 #define ZERO 0
-#define PACKET_SIZE 256
+#define BUFFER_SIZE 256
 
 /**
  * create tcp client
@@ -54,8 +54,8 @@ void Client::sendMessage(string message) {
     int resultCode;
     resultCode = (int)send(sockfd, message.c_str(), message.length(), 0);
 
-    cout << "send message to server: " ;
-    cout << message << endl;
+    //cout << "send message to server: " ;
+    //cout << message << endl;
 
     //check message sent
     if (resultCode < ZERO) {
@@ -63,11 +63,11 @@ void Client::sendMessage(string message) {
     }
 
     //read response for server - optional
-    char buffer[PACKET_SIZE];
+    char buffer[BUFFER_SIZE];
     // Now read server response
-    memset (buffer,0,PACKET_SIZE);
-    resultCode =  (int)read(sockfd, buffer, PACKET_SIZE);
-    memset (buffer,0,PACKET_SIZE);
+    memset (buffer,0,BUFFER_SIZE);
+    resultCode =  (int)read(sockfd, buffer, BUFFER_SIZE);
+    memset (buffer,0,BUFFER_SIZE);
 }
 
 
@@ -86,10 +86,10 @@ string Client::sendMessageWithFeedback(string message) {
     }
 
     //read response for server - optional
-    char buffer[PACKET_SIZE];
+    char buffer[BUFFER_SIZE];
     // Now read server response
-    memset (buffer,0,PACKET_SIZE);
-    resultCode =  (int)read(sockfd, buffer, PACKET_SIZE);
+    memset (buffer,0,BUFFER_SIZE);
+    resultCode =  (int)read(sockfd, buffer, BUFFER_SIZE);
 
     if (resultCode < 0) {
         throw "ERROR reading from socket";

@@ -3,13 +3,13 @@
 #include <sstream>
 #include <strings.h>
 
-#define PACKET_SIZE 256
+#define BUFFER_SIZE 256
 #define MAX_WAITING 5
 #define ZERO 0
 #define MILISEC 1000
 
 using namespace std;
-
+pthread_mutex_t serverRunningMutex;
 /**
  * create new tcp server
  * @param portNumber to listen to
@@ -38,6 +38,7 @@ Server::Server(int portNumber, int timesPerSec) {
     symbolsTable = SymbolsTable::getInstance();
     this->timesPerSec = timesPerSec / MILISEC;
     this->running = false;
+    pthread_mutex_init(&serverRunningMutex, nullptr);
 }
 /**
  * server waiting for connection, stop when a client enters
@@ -45,7 +46,7 @@ Server::Server(int portNumber, int timesPerSec) {
  */
 int Server::waitForConnection() {
     int currentSocketFd, clilen;
-    char buffer[256];
+    char buffer[BUFFER_SIZE];
     struct sockaddr_in cli_addr = {};
     int  n;
 
@@ -59,9 +60,9 @@ int Server::waitForConnection() {
         throw "ERROR on accept";
     }
 
-    bzero(buffer, PACKET_SIZE);
+    bzero(buffer, BUFFER_SIZE);
     //read bytes
-    n = (int)read(currentSocketFd, buffer, (PACKET_SIZE - sizeof(char)));
+    n = (int)read(currentSocketFd, buffer, (BUFFER_SIZE - sizeof(char)));
 
     //empty packet - lost connection
     if (n < ZERO){
@@ -69,8 +70,7 @@ int Server::waitForConnection() {
     }
 
     this->running = true;
-    cout << "first data from simulator: (only first will be printed)" << endl;
-    cout << buffer << endl;
+    cout << "simulator connected" << endl;
 
     //update values
     symbolsTable->updateValues(buffer);
@@ -84,17 +84,17 @@ int Server::waitForConnection() {
  */
 void Server::listen(int currentSocketFd) {
 
-    char buffer[256];
+    char buffer[BUFFER_SIZE];
     int  n;
     if(currentSocketFd == -1) {
         return; //nothing to listen to
     }
 
     /* If connection is established then start communicating */
-    while(running) {
-        bzero(buffer, PACKET_SIZE);
+    while(true) {
+        bzero(buffer, BUFFER_SIZE);
         //read bytes
-        n = (int)read(currentSocketFd, buffer, (PACKET_SIZE - sizeof(char)));
+        n = (int)read(currentSocketFd, buffer, (BUFFER_SIZE - sizeof(char)));
 
         //empty packet - lost connection
         if (n < ZERO){
@@ -108,11 +108,24 @@ void Server::listen(int currentSocketFd) {
         //update values
         symbolsTable->updateValues(buffer);
         sleep((unsigned int)timesPerSec);
+
+        pthread_mutex_lock(&serverRunningMutex);
+        if (running == false) {
+            //release lock
+            pthread_mutex_unlock(&serverRunningMutex);
+            break;
+        }
+        //release lock
+        pthread_mutex_unlock(&serverRunningMutex);
     }
 }
 
 void Server::stopListen() {
+
+    pthread_mutex_lock(&serverRunningMutex);
     running = false;
+    //release lock
+    pthread_mutex_unlock(&serverRunningMutex);
 }
 /**
  * destructor for server

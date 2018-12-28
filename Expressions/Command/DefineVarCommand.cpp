@@ -49,7 +49,7 @@ int DefineVarCommand::execute(deque<string> act) {
             setValue(path, val);
 
         } catch (const char* message) {
-            cout << message << endl;
+           // cout << message << endl;
             return  -1;
         }
         return 0;

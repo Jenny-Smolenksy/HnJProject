@@ -41,7 +41,13 @@ void* threadFuncWaitForConnection(void* arg) {
 void* threadFuncListen(void* arg) {
 
     PARAMS* params = (PARAMS*)arg;
-    params->server->listen(params->socketFd);
+    try {
+        params->server->listen(params->socketFd);
+    } catch (invalid_argument& e) {
+        throw "server disconnected";
+    }
+    delete params;
+
 }
 
 /**
@@ -79,7 +85,6 @@ void ServerStream::startListen() {
     pthread_join(threadIdWait, &result);
     params = (PARAMS*)result;
 
-    cout << "client connected, listening to client" << endl;
     pthread_create(&threadId, nullptr, threadFuncListen, params);
 }
 /**
@@ -88,10 +93,12 @@ void ServerStream::startListen() {
 ServerStream::~ServerStream() {
     //kill or close server if needed
 
-    pthread_t pthreadId;
+    pthread_t pthreadIdClose;
     PARAMS* params = new PARAMS{server, 0};
 
- //   pthread_create(&pthreadId, nullptr, threadFuncWaitForConnection, params);
-    delete server;
+   pthread_create(&pthreadIdClose, nullptr, threadFuncStopListen, params);
+   pthread_join(pthreadIdClose, nullptr);
+   pthread_join(threadId, nullptr);
+   delete params;
+   delete server;
 }
-
