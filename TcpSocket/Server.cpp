@@ -70,7 +70,7 @@ int Server::waitForConnection() {
     }
 
     this->running = true;
-    cout << "simulator connected" << endl;
+    //cout << "simulator connected" << endl;
 
     //update values
     symbolsTable->updateValues(buffer);

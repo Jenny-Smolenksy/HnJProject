@@ -80,7 +80,7 @@ void ServerStream::startListen() {
     PARAMS* params = new PARAMS{server, sockId};
     void* result;
 
-    cout << "opening server.." << endl;
+    //cout << "opening server.." << endl;
     pthread_create(&threadIdWait, nullptr, threadFuncWaitForConnection, params);
     pthread_join(threadIdWait, &result);
     params = (PARAMS*)result;
